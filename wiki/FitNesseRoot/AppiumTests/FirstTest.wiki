@@ -6,5 +6,6 @@ We can launch an app and take screenshot and other basics
 
 |script|android test       |
 |launch app                |
+|click |Add                |
 |show  |take screenshot|app|
 |show  |save page source   |
