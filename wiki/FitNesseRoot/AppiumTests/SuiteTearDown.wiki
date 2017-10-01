@@ -1,0 +1,7 @@
+---
+Help: Stops appium after tests complete.
+---
+This set up page is executed once, after all tests in this suite.
+
+|script|appium driver setup|
+|stop driver               |

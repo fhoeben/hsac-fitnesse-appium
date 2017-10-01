@@ -1,0 +1,18 @@
+---
+Help: Defines where to look for fixture code, and ensures browser is started.
+---
+This set up page is executed once, before any tests in this suite.
+
+|Import                              |
+|nl.hsac.fitnesse.fixture.slim       |
+|nl.hsac.fitnesse.fixture.slim.mobile|
+
+!define APPIUM_URL {https://eu1.appium.testobject.com/wd/hub}
+
+|script        |map fixture                                            |
+|set value     |9AAE9BD5EE2B4A9DBB91722EC81AC749|for|testobject_api_key|
+|set value     |6                               |for|platformVersion   |
+|$capabilities=|copy map                                               |
+
+|script                      |appium driver setup                          |
+|connect to android driver at|${APPIUM_URL}|with capabilities|$capabilities|
