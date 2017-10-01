@@ -16,3 +16,4 @@ This set up page is executed once, before any tests in this suite.
 
 |script                      |appium driver setup                          |
 |connect to android driver at|${APPIUM_URL}|with capabilities|$capabilities|
+|show                        |driver description                           |
