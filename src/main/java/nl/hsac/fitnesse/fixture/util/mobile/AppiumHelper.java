@@ -3,14 +3,12 @@ package nl.hsac.fitnesse.fixture.util.mobile;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
-import nl.hsac.fitnesse.fixture.util.FileUtil;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.by.ConstantBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -53,21 +51,8 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             }
 
             @Override
-            protected String saveHtmlAsPageSource(String fileName, String xml) {
-                String result;
-                try {
-                    String pageSourceName = getPageSourceName(fileName);
-                    String file = FileUtil.saveToFile(pageSourceName, "xml", xml.getBytes("utf-8"));
-                    String wikiUrl = getWikiUrl(file);
-                    if (wikiUrl != null) {
-                        result = wikiUrl;
-                    } else {
-                        result = file;
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException("Unable to save source", e);
-                }
-                return result;
+            protected String getPageSourceExtension() {
+                return "xml";
             }
         };
     }

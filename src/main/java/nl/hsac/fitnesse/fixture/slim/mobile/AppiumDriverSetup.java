@@ -5,7 +5,6 @@ import io.appium.java_client.ios.IOSDriver;
 import nl.hsac.fitnesse.fixture.Environment;
 import nl.hsac.fitnesse.fixture.slim.web.SeleniumDriverSetup;
 import nl.hsac.fitnesse.fixture.util.mobile.AppiumDriverManager;
-import nl.hsac.fitnesse.fixture.util.selenium.by.BestMatchBy;
 import nl.hsac.fitnesse.fixture.util.selenium.driverfactory.DriverManager;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -21,8 +20,6 @@ public class AppiumDriverSetup extends SeleniumDriverSetup {
         DriverManager manager = Environment.getInstance().getSeleniumDriverManager();
         AppiumDriverManager appiumDriverManager = new AppiumDriverManager(manager);
         Environment.getInstance().setSeleniumDriverManager(appiumDriverManager);
-
-        BestMatchBy.setBestFunction((sc, l) -> l.get(0));
     }
 
     public boolean connectToAndroidDriverAtWithCapabilities(String url, Map<String, Object> capabilities)
