@@ -4,7 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import nl.hsac.fitnesse.fixture.slim.web.BrowserTest;
 import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
-import org.openqa.selenium.WebElement;
 
 /**
  * Specialized class to test mobile applications using Appium.
@@ -35,11 +34,6 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
 
     @Override
     public boolean ensureActiveTabIsNotClosed() {
-        return true;
-    }
-
-    @Override
-    protected boolean isElementOnScreen(WebElement element) {
         return true;
     }
 
