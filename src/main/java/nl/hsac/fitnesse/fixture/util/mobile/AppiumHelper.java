@@ -58,6 +58,16 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     }
 
     @Override
+    public void setScriptWait(int scriptTimeout) {
+        System.out.println("Not setting script timeout as Appium does not support it");
+    }
+
+    @Override
+    public void setPageLoadWait(int pageLoadWait) {
+        System.out.println("Not setting page load timeout as Appium does not support it");
+    }
+
+    @Override
     public T getElementToClick(String place) {
         return findByTechnicalSelectorOr(place, this::getClickBy);
     }
