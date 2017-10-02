@@ -46,10 +46,10 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <!-- appium relies on internal class removed in 3.6.0 -->
+                <!-- Ensure appium dependency does not overrule the selenium api version used -->
                 <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-java</artifactId>
-                <version>3.5.3</version>
+                <artifactId>selenium-api</artifactId>
+                <version>3.6.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
