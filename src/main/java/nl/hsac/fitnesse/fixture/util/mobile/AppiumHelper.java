@@ -68,6 +68,11 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     }
 
     @Override
+    public Boolean isElementOnScreen(WebElement element) {
+        return element != null && element.isDisplayed();
+    }
+
+    @Override
     public T getElementToClick(String place) {
         return findByTechnicalSelectorOr(place, this::getClickBy);
     }

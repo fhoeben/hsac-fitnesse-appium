@@ -4,8 +4,32 @@ Test
 
 We can launch an app and take screenshot and other basics
 
-|script|android test       |
-|launch app                |
-|click |Add                |
-|show  |take screenshot|app|
-|show  |save page source   |
+|scenario|add _  |item                                                                          |
+|enter   |@{item}|as|xpath=//*[@resource-id='org.openintents.shopping:id/autocomplete_add_item']|
+|click   |Add                                                                                   |
+
+|scenario|capture screen     |
+|show    |take screenshot|app|
+|show    |save page source   |
+
+
+|script                |mobile test    |
+|launch app                            |
+|seconds before timeout|2              |
+|capture screen                        |
+|add                   |Wine           |
+|add                   |Beer           |
+|capture screen                        |
+|ensure                |is visible|Beer|
+|click                 |Wine           |
+|capture screen                        |
+|reject                |is visible|Beer|
+|is visible            |Quantity       |
+|click                 |Cancel         |
+|capture screen                        |
+
+|script            |
+|click|More options|
+|capture screen    |
+|click|Delete list |
+|capture screen    |
