@@ -16,8 +16,11 @@ We can launch an app and take screenshot and other basics
 |click     |Cancel         |
 |capture screen            |
 
-|script            |
-|click|More options|
-|capture screen    |
-|click|Delete list |
-|capture screen    |
+|script                                                           |
+|click           |More options                                    |
+|capture screen                                                   |
+|click           |Delete list                                     |
+|capture screen                                                   |
+|wait for visible|Do you really want to delete this shopping list?|
+|click           |OK                                              |
+|capture screen                                                   |
