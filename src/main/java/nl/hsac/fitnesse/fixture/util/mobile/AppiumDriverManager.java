@@ -27,11 +27,11 @@ public class AppiumDriverManager extends DriverManager {
     protected SeleniumHelper createHelper(WebDriver driver) {
         SeleniumHelper helper;
         if (driver instanceof IOSDriver) {
-            helper = new IosHelper();
+            helper = createHelperForIos();
         } else if (driver instanceof AndroidDriver) {
-            helper = new AndroidHelper();
+            helper = createHelperForAndroid();
         } else if (driver instanceof AppiumDriver) {
-            helper = new AppiumHelper();
+            helper = createGenericAppiumHelper();
         } else {
             helper = super.createHelper(driver);
         }
@@ -40,6 +40,18 @@ public class AppiumDriverManager extends DriverManager {
             BestMatchBy.setBestFunction(this::selectBestElement);
         }
         return helper;
+    }
+
+    protected SeleniumHelper createHelperForIos() {
+        return new IosHelper();
+    }
+
+    protected SeleniumHelper createHelperForAndroid() {
+        return new AndroidHelper();
+    }
+
+    protected SeleniumHelper createGenericAppiumHelper() {
+        return new AppiumHelper();
     }
 
     protected WebElement selectBestElement(SearchContext sc, List<WebElement> elements) {
