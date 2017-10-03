@@ -51,6 +51,12 @@
                 <artifactId>selenium-api</artifactId>
                 <version>3.6.0</version>
             </dependency>
+            <dependency>
+                <!-- Ensure appium dependency does not overrule the selenium api version used -->
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-support</artifactId>
+                <version>3.6.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
