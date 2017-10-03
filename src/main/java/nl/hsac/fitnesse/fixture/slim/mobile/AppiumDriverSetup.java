@@ -11,15 +11,18 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 /**
  * Fixture to connect FitNesse to appium.
  */
 public class AppiumDriverSetup extends SeleniumDriverSetup {
+    private static final String APP_CAPABILITY_NAME = "app";
     private final List<String> secretCapabilities = new ArrayList<>();
 
     static {
@@ -41,6 +44,20 @@ public class AppiumDriverSetup extends SeleniumDriverSetup {
     public boolean connectToIosDriverAtWithCapabilities(String url, Map<String, Object> capabilities)
             throws MalformedURLException {
         return createAndSetRemoteWebDriver(IOSDriver::new, url, new DesiredCapabilities(capabilities));
+    }
+
+    @Override
+    protected boolean createAndSetRemoteWebDriver(BiFunction<URL, Capabilities, ? extends RemoteWebDriver> constr,
+                                                  String url,
+                                                  DesiredCapabilities desiredCapabilities)
+            throws MalformedURLException {
+        Object appValue = desiredCapabilities.getCapability(APP_CAPABILITY_NAME);
+        if (appValue instanceof String) {
+            String appLocation = (String) appValue;
+            String fullPath = getFilePathFromWikiUrl(appLocation);
+            desiredCapabilities.setCapability(APP_CAPABILITY_NAME, fullPath);
+        }
+        return super.createAndSetRemoteWebDriver(constr, url, desiredCapabilities);
     }
 
     @Override
