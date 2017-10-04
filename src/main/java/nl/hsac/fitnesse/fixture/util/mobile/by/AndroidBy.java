@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 public class AndroidBy {
     private static final String CONTAINS_EXACT = "[@enabled='true' " +
-            "and (@text= '%1$s' " +
+            "and (@text='%1$s' " +
             "or @name='%1$s' " +
             "or @content-desc='%1$s' " +
             "or @resource-id='%1$s')]";
