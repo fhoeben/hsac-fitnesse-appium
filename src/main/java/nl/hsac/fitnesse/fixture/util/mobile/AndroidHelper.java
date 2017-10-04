@@ -4,7 +4,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import nl.hsac.fitnesse.fixture.util.mobile.by.AndroidBy;
-import nl.hsac.fitnesse.fixture.util.selenium.by.XPathBy;
 import org.openqa.selenium.By;
 
 import java.util.function.Function;
@@ -40,7 +39,8 @@ public class AndroidHelper extends AppiumHelper<AndroidElement, AndroidDriver<An
 		return AndroidBy.heuristic(container);
 	}
 
-	public AndroidElement getElementToCheckVisibility(String text) {
-		return findElement(AndroidBy.partialText(text));
-	}
+    @Override
+    protected By getElementToCheckVisibilityBy(String text) {
+        return AndroidBy.partialText(text);
+    }
 }

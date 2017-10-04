@@ -4,7 +4,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import nl.hsac.fitnesse.fixture.util.mobile.by.IOSBy;
-import nl.hsac.fitnesse.fixture.util.selenium.by.XPathBy;
 import org.openqa.selenium.By;
 
 import java.util.function.Function;
@@ -45,7 +44,7 @@ public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
     }
 
     @Override
-    public IOSElement getElementToCheckVisibility(String text) {
-        return findElement(IOSBy.partialText(text));
+    protected By getElementToCheckVisibilityBy(String text) {
+        return IOSBy.partialText(text);
     }
 }
