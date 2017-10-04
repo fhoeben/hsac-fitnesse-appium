@@ -1,0 +1,23 @@
+---
+Test
+---
+
+We can scroll down
+
+|script                |mobile test  |
+|launch app                          |
+|seconds before timeout|2            |
+|add                   |Wine         |
+|add                   |Beer         |
+|add                   |bread        |
+|add                   |More wine    |
+|add                   |More beer    |
+|add                   |sliced bread |
+|add                   |More butter  |
+|add                   |diced carrots|
+|add                   |raw meat     |
+|capture screen                      |
+|scroll to             |Beer         |
+|capture screen                      |
+|is visible            |Beer         |
+|capture screen                      |

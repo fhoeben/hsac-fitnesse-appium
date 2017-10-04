@@ -6,11 +6,12 @@ import io.appium.java_client.MobileElement;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.by.ConstantBy;
-import nl.hsac.fitnesse.fixture.util.selenium.by.XPathBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
@@ -106,5 +107,13 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
     protected By getElementToCheckVisibilityBy(String place) {
         return ConstantBy.nothing();
+    }
+
+    @Override
+    public void scrollTo(WebElement element) {
+        HashMap<String, String> scrollObject = new HashMap<>();
+        scrollObject.put("direction", "up");
+        scrollObject.put("element", ((RemoteWebElement) element).getId());
+        executeScript("mobile: scroll", scrollObject);
     }
 }

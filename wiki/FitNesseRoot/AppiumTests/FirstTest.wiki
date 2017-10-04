@@ -4,15 +4,6 @@ Test
 
 We can launch an app and take screenshot and other basics
 
-|scenario|add _  |item                                                                          |
-|enter   |@{item}|as|xpath=//*[@resource-id='org.openintents.shopping:id/autocomplete_add_item']|
-|click   |Add                                                                                   |
-
-|scenario|capture screen     |
-|show    |take screenshot|app|
-|show    |save page source   |
-
-
 |script                |mobile test    |
 |launch app                            |
 |seconds before timeout|2              |
