@@ -57,17 +57,13 @@ public class AppiumDriverManager extends DriverManager {
     protected WebElement selectBestElement(SearchContext sc, List<WebElement> elements) {
         WebElement element = elements.get(0);
         if (!element.isDisplayed()) {
-            WebElement firstDisplayed = null;
             for (int i = 1; i < elements.size(); i++) {
                 WebElement otherElement = elements.get(i);
                 if (otherElement.isDisplayed()) {
-                    if (firstDisplayed == null) {
-                        firstDisplayed = otherElement;
-                        break;
-                    }
+                    element = otherElement;
+                    break;
                 }
             }
-            element = firstDisplayed;
         }
         return element;
     }
