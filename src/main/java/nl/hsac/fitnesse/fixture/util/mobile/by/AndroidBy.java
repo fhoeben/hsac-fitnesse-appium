@@ -16,7 +16,7 @@ public class AndroidBy {
             "and (contains(@text,'%1$s') " +
             "or contains(@name,'%1$s') " +
             "or contains(@content-desc,'%1$s') " +
-            "or contains(@resource-id,'%1$s')]";
+            "or contains(@resource-id,'%1$s'))]";
 
     public static By exactText(String text) {
         return new XPathBy("//*" + CONTAINS_EXACT, text);
