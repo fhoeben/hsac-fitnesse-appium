@@ -4,6 +4,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import nl.hsac.fitnesse.fixture.util.mobile.by.IOSBy;
+import nl.hsac.fitnesse.fixture.util.selenium.by.XPathBy;
 import org.openqa.selenium.By;
 
 import java.util.function.Function;
@@ -41,5 +42,10 @@ public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
     @Override
     protected By getContainerBy(String container) {
         return IOSBy.heuristic(container);
+    }
+
+    @Override
+    public IOSElement getElementByPartialText(String text) {
+        return findElement(IOSBy.partialText(text));
     }
 }

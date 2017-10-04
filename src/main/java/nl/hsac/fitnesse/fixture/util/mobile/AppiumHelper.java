@@ -6,6 +6,7 @@ import io.appium.java_client.MobileElement;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.by.ConstantBy;
+import nl.hsac.fitnesse.fixture.util.selenium.by.XPathBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -97,5 +98,9 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
     protected By getContainerBy(String container) {
         return ConstantBy.nothing();
+    }
+
+    public T getElementByPartialText(String text) {
+        return findElement(new XPathBy("//*[contains(@name, '%s')]", text));
     }
 }

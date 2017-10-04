@@ -38,6 +38,12 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
     }
 
     @Override
+    protected T getElementToCheckVisibility(String place) {
+        T result = getMobileHelper().getElementByPartialText(place);
+        return result;
+    }
+
+    @Override
     public String savePageSource() {
         String fileName = "xmlView_" + System.currentTimeMillis();
         return savePageSource(fileName, fileName + ".xml");
