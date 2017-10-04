@@ -100,7 +100,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
         return ConstantBy.nothing();
     }
 
-    public T getElementByPartialText(String text) {
+    public T getElementToCheckVisibility(String text) {
         return findElement(new XPathBy("//*[contains(@name, '%s')]", text));
     }
 }

@@ -39,7 +39,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
 
     @Override
     protected T getElementToCheckVisibility(String place) {
-        T result = getMobileHelper().getElementByPartialText(place);
+        T result = getMobileHelper().getElementToCheckVisibility(place);
         return result;
     }
 

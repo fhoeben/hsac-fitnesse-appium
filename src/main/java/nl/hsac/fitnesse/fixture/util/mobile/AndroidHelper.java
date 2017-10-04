@@ -40,7 +40,7 @@ public class AndroidHelper extends AppiumHelper<AndroidElement, AndroidDriver<An
 		return AndroidBy.heuristic(container);
 	}
 
-	public AndroidElement getElementByPartialText(String text) {
+	public AndroidElement getElementToCheckVisibility(String text) {
 		return findElement(AndroidBy.partialText(text));
 	}
 }

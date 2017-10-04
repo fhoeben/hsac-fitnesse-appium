@@ -45,7 +45,7 @@ public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
     }
 
     @Override
-    public IOSElement getElementByPartialText(String text) {
+    public IOSElement getElementToCheckVisibility(String text) {
         return findElement(IOSBy.partialText(text));
     }
 }
