@@ -150,21 +150,15 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             int lowPoint = centerY + heightDelta;
             int highPoint = centerY - heightDelta;
 
-            String prevRefTag = null;
-            String prevRefText = null;
-            Dimension prevRefSize = null;
-            Point prevRefLocation = null;
+            ElementProperties prevRef = null;
 
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
                 MobileElement refEl = findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
+                ElementProperties currentRef = new ElementProperties(refEl);
                 int scrollStart;
                 int scrollEnd;
-                boolean sameEl = (null != prevRefTag &&
-                        refEl.getTagName().equals(prevRefTag) &&
-                        refEl.getText().equals(prevRefText) &&
-                        refEl.getSize().equals(prevRefSize) &&
-                        refEl.getLocation().equals(prevRefLocation));
+                boolean sameEl = currentRef.equals(prevRef);
                 if (bumps > 0 || sameEl) {
                     LOGGER.debug("Going down!");
                     scrollStart = lowPoint;
@@ -177,11 +171,6 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                     scrollStart = highPoint;
                     scrollEnd = lowPoint;
                 }
-                prevRefTag = refEl.getTagName();
-                prevRefText = refEl.getText();
-                prevRefSize = refEl.getSize();
-                prevRefLocation = refEl.getLocation();
-
                 getTouchAction()
                         .press(centerX, scrollStart)
                         .waitAction(waitBetweenScrollPressAndMove)
@@ -190,6 +179,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                         .release()
                         .perform();
 
+                prevRef = currentRef;
                 target = placeFinder.apply(place);
             }
         }
@@ -198,5 +188,45 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
     protected TouchAction getTouchAction() {
         return new TouchAction(driver());
+    }
+
+    /**
+     * Container for properties of an element that will be compared to determine whether it is considered
+     * the same when scrolling.
+     */
+    protected static class ElementProperties {
+        private String tag;
+        private String text;
+        private Dimension size;
+        private Point location;
+
+        public ElementProperties(WebElement element) {
+            tag = element.getTagName();
+            text = element.getText();
+            size = element.getSize();
+            location = element.getLocation();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ElementProperties that = (ElementProperties) o;
+
+            if (!tag.equals(that.tag)) return false;
+            if (!text.equals(that.text)) return false;
+            if (!size.equals(that.size)) return false;
+            return location.equals(that.location);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = tag.hashCode();
+            result = 31 * result + text.hashCode();
+            result = 31 * result + size.hashCode();
+            result = 31 * result + location.hashCode();
+            return result;
+        }
     }
 }
