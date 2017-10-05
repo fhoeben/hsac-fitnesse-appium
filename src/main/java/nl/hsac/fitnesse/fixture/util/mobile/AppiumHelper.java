@@ -177,8 +177,8 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                 prevRefSize = refEl.getSize();
                 prevRefLocation = refEl.getLocation();
 
-                TouchAction swipeList = new TouchAction(driver());
-                swipeList.press(centerX, scrollStart)
+                getTouchAction()
+                        .press(centerX, scrollStart)
                         .waitAction(Duration.ofMillis(400))
                         .moveTo(0, scrollEnd - scrollStart)
                         .waitAction(Duration.ofMillis(200))
@@ -189,5 +189,9 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             }
         }
         return target != null && target.isDisplayed();
+    }
+
+    protected TouchAction getTouchAction() {
+        return new TouchAction(driver());
     }
 }
