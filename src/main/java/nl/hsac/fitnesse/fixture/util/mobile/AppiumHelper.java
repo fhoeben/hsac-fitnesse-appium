@@ -11,7 +11,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +27,8 @@ import static nl.hsac.fitnesse.fixture.util.selenium.by.TechnicalSelectorBy.byIf
  * Specialized helper to deal with appium's web driver.
  */
 public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> extends SeleniumHelper<T> {
-    private static final Function<String, By> ACCESSIBILITY_BY = byIfStartsWith("accessibility", MobileBy::AccessibilityId);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private final static Function<String, By> ACCESSIBILITY_BY = byIfStartsWith("accessibility", MobileBy::AccessibilityId);
 
     @Override
     public D driver() {
@@ -129,7 +133,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             Point center;
             MobileElement topScrollable = findByXPath("(.//*[@scrollable='true'])[1]");
 
-            System.out.println("Scroll to: " + place);
+            LOGGER.debug("Scroll to: {}", place);
             if (topScrollable == null) {
                 dimensions = driver().manage().window().getSize();
                 center = new Point(dimensions.getWidth() / 2, dimensions.getHeight() / 2);
@@ -137,7 +141,8 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                 dimensions = topScrollable.getSize();
                 center = topScrollable.getCenter();
             }
-            double heightDelta = dimensions.getHeight() / 2 * swipeDistance;
+            int heightDelta = Double.valueOf(dimensions.getHeight() / 2 * swipeDistance).intValue();
+            int centerX = center.getX();
             int centerY = center.getY();
 
             String prevRefTag = null;
@@ -145,37 +150,35 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             Dimension prevRefSize = null;
             Point prevRefLocation = null;
 
-            Double startPos;
-            Double endPos;
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
                 MobileElement refEl = findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
+                int scrollStart;
+                int scrollEnd;
                 boolean sameEl = (null != prevRefTag &&
                         refEl.getTagName().equals(prevRefTag) &&
                         refEl.getText().equals(prevRefText) &&
                         refEl.getSize().equals(prevRefSize) &&
                         refEl.getLocation().equals(prevRefLocation));
                 if (bumps > 0 || sameEl) {
-                    System.out.println("Going down!");
-                    startPos = centerY + heightDelta;
-                    endPos = centerY - heightDelta;
+                    LOGGER.debug("Going down!");
+                    scrollStart = centerY + heightDelta;
+                    scrollEnd = centerY - heightDelta;
                     if (sameEl) {
                         bumps++;
                     }
                 } else {
-                    System.out.println("Going up!");
-                    startPos = centerY - heightDelta;
-                    endPos = centerY + heightDelta;
+                    LOGGER.debug("Going up!");
+                    scrollStart = centerY - heightDelta;
+                    scrollEnd = centerY + heightDelta;
                 }
                 prevRefTag = refEl.getTagName();
                 prevRefText = refEl.getText();
                 prevRefSize = refEl.getSize();
                 prevRefLocation = refEl.getLocation();
-                int scrollStart = startPos.intValue();
-                int scrollEnd = endPos.intValue();
 
                 TouchAction swipeList = new TouchAction(driver());
-                swipeList.press(center.getX(), scrollStart)
+                swipeList.press(centerX, scrollStart)
                         .waitAction(Duration.ofMillis(400))
                         .moveTo(0, scrollEnd - scrollStart)
                         .waitAction(Duration.ofMillis(200))
