@@ -4,19 +4,17 @@ Test
 
 We can scroll down
 
-|script                |mobile test  |
-|launch app                          |
-|seconds before timeout|2            |
-|add                   |Wine         |
-|add                   |Beer         |
-|add                   |bread        |
-|add                   |More wine    |
-|add                   |More beer    |
-|add                   |sliced bread |
-|add                   |More butter  |
-|add                   |diced carrots|
-|capture screen                      |
-|scroll to             |Beer         |
-|capture screen                      |
-|is visible            |Beer         |
-|capture screen                      |
+|script    |mobile test  |
+|add       |Wine         |
+|add       |Beer         |
+|add       |bread        |
+|add       |More wine    |
+|add       |More beer    |
+|add       |sliced bread |
+|add       |More butter  |
+|add       |diced carrots|
+|capture screen          |
+|scroll to |Beer         |
+|capture screen          |
+|is visible|Beer         |
+|capture screen          |

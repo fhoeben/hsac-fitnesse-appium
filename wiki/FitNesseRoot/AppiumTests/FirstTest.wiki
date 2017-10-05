@@ -4,20 +4,17 @@ Test
 
 We can launch an app and take screenshot and other basics
 
-|script                |mobile test    |
-|launch app                            |
-|seconds before timeout|2              |
-|capture screen                        |
-|add                   |Wine           |
-|add                   |Beer           |
-|capture screen                        |
-|ensure                |is visible|Beer|
-|click                 |Wine           |
-|capture screen                        |
-|reject                |is visible|Beer|
-|is visible            |Quantity       |
-|click                 |Cancel         |
-|capture screen                        |
+|script    |mobile test    |
+|add       |Wine           |
+|add       |Beer           |
+|capture screen            |
+|ensure    |is visible|Beer|
+|click     |Wine           |
+|capture screen            |
+|reject    |is visible|Beer|
+|is visible|Quantity       |
+|click     |Cancel         |
+|capture screen            |
 
 |script            |
 |click|More options|
