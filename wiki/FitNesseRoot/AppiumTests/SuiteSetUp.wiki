@@ -9,10 +9,10 @@ This set up page is executed once, before any tests in this suite.
 
 !define APPIUM_URL {https://eu1.appium.testobject.com/wd/hub}
 
-|script        |map fixture                      |
-|set value     |${API_KEY}|for|testobject_api_key|
-|set value     |true      |for|resetKeyboard     |
-|$capabilities=|copy map                         |
+|script           |map fixture                      |
+|set value        |${API_KEY}|for|testobject_api_key|
+|set boolean value|true      |for|resetKeyboard     |
+|$capabilities=   |copy map                         |
 
 |script                      |appium driver setup                          |
 |connect to android driver at|${APPIUM_URL}|with capabilities|$capabilities|
