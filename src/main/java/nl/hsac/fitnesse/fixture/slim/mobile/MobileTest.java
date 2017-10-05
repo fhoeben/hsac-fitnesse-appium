@@ -57,33 +57,31 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
 
     @Override
     public boolean scrollTo(String locator) {
-        boolean result = false;
-        String prevRefTag = null;
-        String prevRefText = null;
-        Dimension prevRefSize = null;
-        Point prevRefLocation = null;
-        Dimension dimensions;
-        Point center;
-        MobileElement topScrollable = findByXPath("(//*[@scrollable='true'])[1]");
+        MobileElement target = getElementToCheckVisibility(locator);
+        if (target == null) {
+            String prevRefTag = null;
+            String prevRefText = null;
+            Dimension prevRefSize = null;
+            Point prevRefLocation = null;
+            Dimension dimensions;
+            Point center;
+            MobileElement topScrollable = findByXPath("(//*[@scrollable='true'])[1]");
 
-        System.out.println("Scroll to: " + locator);
-        long originalImplicitWait = 0;
-        if (null != topScrollable) {
-            dimensions = topScrollable.getSize();
-            center = topScrollable.getCenter();
-        } else {
-            dimensions = driver().manage().window().getSize();
-            center = new Point(dimensions.getWidth() / 2, dimensions.getHeight() / 2);
-        }
+            System.out.println("Scroll to: " + locator);
+            long originalImplicitWait = 0;
+            if (null != topScrollable) {
+                dimensions = topScrollable.getSize();
+                center = topScrollable.getCenter();
+            } else {
+                dimensions = driver().manage().window().getSize();
+                center = new Point(dimensions.getWidth() / 2, dimensions.getHeight() / 2);
+            }
 
-        MobileElement target = null;
-        Double startPos;
-        Double endPos;
-        int bumps = 0;
-        driver().manage().timeouts().implicitlyWait(50, TimeUnit.MILLISECONDS);
-        while (target == null && bumps < 2) {
-            target = getElementToCheckVisibility(locator);
-            if (target == null) {
+            Double startPos;
+            Double endPos;
+            int bumps = 0;
+            driver().manage().timeouts().implicitlyWait(50, TimeUnit.MILLISECONDS);
+            while (target == null && bumps < 2) {
                 System.out.println("Value not yet found, scroll");
                 MobileElement refEl = findByXPath("(//*[@scrollable='true']//*[@clickable='true'])[1]");
                 boolean sameEl = (null != prevRefTag &&
@@ -117,13 +115,12 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
                         .waitAction(Duration.ofMillis(200))
                         .release()
                         .perform();
-            } else {
-                result = true;
-            }
-        }
-        driver().manage().timeouts().implicitlyWait(originalImplicitWait, TimeUnit.MILLISECONDS);
 
-        return result;
+                target = getElementToCheckVisibility(locator);
+            }
+            driver().manage().timeouts().implicitlyWait(originalImplicitWait, TimeUnit.MILLISECONDS);
+        }
+        return target != null;
     }
 
     @Override
