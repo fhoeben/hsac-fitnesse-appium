@@ -171,19 +171,23 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                     scrollStart = highPoint;
                     scrollEnd = lowPoint;
                 }
-                getTouchAction()
-                        .press(centerX, scrollStart)
-                        .waitAction(waitBetweenScrollPressAndMove)
-                        .moveTo(0, scrollEnd - scrollStart)
-                        .waitAction(waitBetweenScrollMoveAndRelease)
-                        .release()
-                        .perform();
+                performScroll(centerX, scrollStart, scrollEnd);
 
                 prevRef = currentRef;
                 target = placeFinder.apply(place);
             }
         }
         return target != null && target.isDisplayed();
+    }
+
+    protected TouchAction performScroll(int centerX, int scrollStart, int scrollEnd) {
+        return getTouchAction()
+                .press(centerX, scrollStart)
+                .waitAction(waitBetweenScrollPressAndMove)
+                .moveTo(0, scrollEnd - scrollStart)
+                .waitAction(waitBetweenScrollMoveAndRelease)
+                .release()
+                .perform();
     }
 
     protected TouchAction getTouchAction() {
