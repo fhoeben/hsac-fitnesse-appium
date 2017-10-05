@@ -15,7 +15,6 @@ We can scroll down
 |add                   |sliced bread |
 |add                   |More butter  |
 |add                   |diced carrots|
-|add                   |raw meat     |
 |capture screen                      |
 |scroll to             |Beer         |
 |capture screen                      |
