@@ -29,6 +29,8 @@ import static nl.hsac.fitnesse.fixture.util.selenium.by.TechnicalSelectorBy.byIf
 public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> extends SeleniumHelper<T> {
     private final static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final static Function<String, By> ACCESSIBILITY_BY = byIfStartsWith("accessibility", MobileBy::AccessibilityId);
+    protected Duration waitBetweenScrollPressAndMove = Duration.ofMillis(400);
+    protected Duration waitBetweenScrollMoveAndRelease = Duration.ofMillis(200);
 
     @Override
     public D driver() {
@@ -179,9 +181,9 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
                 getTouchAction()
                         .press(centerX, scrollStart)
-                        .waitAction(Duration.ofMillis(400))
+                        .waitAction(waitBetweenScrollPressAndMove)
                         .moveTo(0, scrollEnd - scrollStart)
-                        .waitAction(Duration.ofMillis(200))
+                        .waitAction(waitBetweenScrollMoveAndRelease)
                         .release()
                         .perform();
 
