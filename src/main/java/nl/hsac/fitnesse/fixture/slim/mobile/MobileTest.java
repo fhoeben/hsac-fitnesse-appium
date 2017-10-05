@@ -89,7 +89,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
             Double endPos;
             int bumps = 0;
             driver().manage().timeouts().implicitlyWait(50, TimeUnit.MILLISECONDS);
-            while (target == null && bumps < maxBumps) {
+            while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
                 System.out.println("Value not yet found, scroll");
                 MobileElement refEl = findByXPath("(//*[@scrollable='true']//*[@clickable='true'])[1]");
                 boolean sameEl = (null != prevRefTag &&
@@ -128,7 +128,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
             }
             driver().manage().timeouts().implicitlyWait(originalImplicitWait, TimeUnit.MILLISECONDS);
         }
-        return target != null;
+        return target != null && target.isDisplayed();
     }
 
     @Override
