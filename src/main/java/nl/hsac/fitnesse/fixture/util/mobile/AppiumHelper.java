@@ -143,9 +143,12 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                 dimensions = topScrollable.getSize();
                 center = topScrollable.getCenter();
             }
-            int heightDelta = Double.valueOf(dimensions.getHeight() / 2 * swipeDistance).intValue();
             int centerX = center.getX();
+
+            int heightDelta = Double.valueOf(dimensions.getHeight() / 2 * swipeDistance).intValue();
             int centerY = center.getY();
+            int lowPoint = centerY + heightDelta;
+            int highPoint = centerY - heightDelta;
 
             String prevRefTag = null;
             String prevRefText = null;
@@ -164,15 +167,15 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
                         refEl.getLocation().equals(prevRefLocation));
                 if (bumps > 0 || sameEl) {
                     LOGGER.debug("Going down!");
-                    scrollStart = centerY + heightDelta;
-                    scrollEnd = centerY - heightDelta;
+                    scrollStart = lowPoint;
+                    scrollEnd = highPoint;
                     if (sameEl) {
                         bumps++;
                     }
                 } else {
                     LOGGER.debug("Going up!");
-                    scrollStart = centerY - heightDelta;
-                    scrollEnd = centerY + heightDelta;
+                    scrollStart = highPoint;
+                    scrollEnd = lowPoint;
                 }
                 prevRefTag = refEl.getTagName();
                 prevRefText = refEl.getText();
