@@ -149,7 +149,6 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             Double endPos;
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
-                System.out.println("Value not yet found, scroll");
                 MobileElement refEl = findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
                 boolean sameEl = (null != prevRefTag &&
                         refEl.getTagName().equals(prevRefTag) &&
