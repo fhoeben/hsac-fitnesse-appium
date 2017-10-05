@@ -12,6 +12,7 @@ This set up page is executed once, before any tests in this suite.
 |script        |map fixture                      |
 |set value     |${API_KEY}|for|testobject_api_key|
 |set value     |6         |for|platformVersion   |
+|set value     |true      |for|resetKeyboard     |
 |$capabilities=|copy map                         |
 
 |script                      |appium driver setup                          |
