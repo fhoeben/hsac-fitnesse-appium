@@ -68,7 +68,6 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
             MobileElement topScrollable = findByXPath("(//*[@scrollable='true'])[1]");
 
             System.out.println("Scroll to: " + place);
-            int originalImplicitWait = 0;
             if (topScrollable == null) {
                 dimensions = driver().manage().window().getSize();
                 center = new Point(dimensions.getWidth() / 2, dimensions.getHeight() / 2);
@@ -87,7 +86,6 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
             Double startPos;
             Double endPos;
             int bumps = 0;
-            getSeleniumHelper().setImplicitlyWait(50);
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
                 System.out.println("Value not yet found, scroll");
                 MobileElement refEl = findByXPath("(//*[@scrollable='true']//*[@clickable='true'])[1]");
@@ -125,7 +123,6 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
 
                 target = placeFinder.apply(place);
             }
-            getSeleniumHelper().setImplicitlyWait(originalImplicitWait);
         }
         return target != null && target.isDisplayed();
     }
