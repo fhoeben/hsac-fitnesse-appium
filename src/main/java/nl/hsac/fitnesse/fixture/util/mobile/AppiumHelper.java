@@ -131,13 +131,13 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     public boolean scrollTo(int maxBumps, double swipeDistance, String place, Function<String, T> placeFinder) {
         MobileElement target = placeFinder.apply(place);
         if (target == null) {
+            LOGGER.debug("Scroll to: {}", place);
             Dimension dimensions;
             Point center;
             MobileElement topScrollable = findByXPath("(.//*[@scrollable='true'])[1]");
 
-            LOGGER.debug("Scroll to: {}", place);
             if (topScrollable == null) {
-                dimensions = driver().manage().window().getSize();
+                dimensions = getWindowSize();
                 center = new Point(dimensions.getWidth() / 2, dimensions.getHeight() / 2);
             } else {
                 dimensions = topScrollable.getSize();
