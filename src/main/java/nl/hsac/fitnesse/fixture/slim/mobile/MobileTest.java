@@ -59,23 +59,26 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
     public boolean scrollTo(String place) {
         MobileElement target = getElementToCheckVisibility(place);
         if (target == null) {
-            String prevRefTag = null;
-            String prevRefText = null;
-            Dimension prevRefSize = null;
-            Point prevRefLocation = null;
             Dimension dimensions;
             Point center;
             MobileElement topScrollable = findByXPath("(//*[@scrollable='true'])[1]");
 
             System.out.println("Scroll to: " + place);
             long originalImplicitWait = 0;
-            if (null != topScrollable) {
-                dimensions = topScrollable.getSize();
-                center = topScrollable.getCenter();
-            } else {
+            if (topScrollable == null) {
                 dimensions = driver().manage().window().getSize();
                 center = new Point(dimensions.getWidth() / 2, dimensions.getHeight() / 2);
+            } else {
+                dimensions = topScrollable.getSize();
+                center = topScrollable.getCenter();
             }
+            double quarterHeight = dimensions.getHeight() * 0.25;
+            int centerY = center.getY();
+
+            String prevRefTag = null;
+            String prevRefText = null;
+            Dimension prevRefSize = null;
+            Point prevRefLocation = null;
 
             Double startPos;
             Double endPos;
@@ -91,15 +94,15 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
                         refEl.getLocation().equals(prevRefLocation));
                 if (bumps > 0 || sameEl) {
                     System.out.println("Going down!");
-                    startPos = center.getY() + dimensions.getHeight() * 0.25;
-                    endPos = center.getY() - dimensions.getHeight() * 0.25;
+                    startPos = centerY + quarterHeight;
+                    endPos = centerY - quarterHeight;
                     if (sameEl) {
                         bumps++;
                     }
                 } else {
                     System.out.println("Going up!");
-                    startPos = center.getY() - dimensions.getHeight() * 0.25;
-                    endPos = center.getY() + dimensions.getHeight() * 0.25;
+                    startPos = centerY - quarterHeight;
+                    endPos = centerY + quarterHeight;
                 }
                 prevRefTag = refEl.getTagName();
                 prevRefText = refEl.getText();
