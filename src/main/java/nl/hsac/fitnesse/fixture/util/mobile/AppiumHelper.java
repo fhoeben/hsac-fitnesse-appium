@@ -155,10 +155,10 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
                 MobileElement refEl = findScrollRefElement();
-                ElementProperties currentRef = new ElementProperties(refEl);
+                ElementProperties currentRef = refEl != null ? new ElementProperties(refEl) : null;
                 int scrollStart;
                 int scrollEnd;
-                boolean sameEl = currentRef.equals(prevRef);
+                boolean sameEl = currentRef != null && currentRef.equals(prevRef);
                 if (bumps > 0 || sameEl) {
                     LOGGER.debug("Going down!");
                     scrollStart = lowPoint;
