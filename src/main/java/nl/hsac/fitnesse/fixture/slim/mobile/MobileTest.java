@@ -10,6 +10,7 @@ import org.openqa.selenium.Point;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * Specialized class to test mobile applications using Appium.
@@ -57,7 +58,11 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
 
     @Override
     public boolean scrollTo(String place) {
-        MobileElement target = getElementToCheckVisibility(place);
+        return scrollTo(2, 0.5, place, this::getElementToCheckVisibility);
+    }
+
+    protected boolean scrollTo(int maxBumps, double swipeDistance, String place, Function<String, T> placeFinder) {
+        MobileElement target = placeFinder.apply(place);
         if (target == null) {
             Dimension dimensions;
             Point center;
@@ -72,7 +77,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
                 dimensions = topScrollable.getSize();
                 center = topScrollable.getCenter();
             }
-            double quarterHeight = dimensions.getHeight() * 0.25;
+            double heightDelta = dimensions.getHeight() / 2 * swipeDistance;
             int centerY = center.getY();
 
             String prevRefTag = null;
@@ -84,7 +89,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
             Double endPos;
             int bumps = 0;
             driver().manage().timeouts().implicitlyWait(50, TimeUnit.MILLISECONDS);
-            while (target == null && bumps < 2) {
+            while (target == null && bumps < maxBumps) {
                 System.out.println("Value not yet found, scroll");
                 MobileElement refEl = findByXPath("(//*[@scrollable='true']//*[@clickable='true'])[1]");
                 boolean sameEl = (null != prevRefTag &&
@@ -94,15 +99,15 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
                         refEl.getLocation().equals(prevRefLocation));
                 if (bumps > 0 || sameEl) {
                     System.out.println("Going down!");
-                    startPos = centerY + quarterHeight;
-                    endPos = centerY - quarterHeight;
+                    startPos = centerY + heightDelta;
+                    endPos = centerY - heightDelta;
                     if (sameEl) {
                         bumps++;
                     }
                 } else {
                     System.out.println("Going up!");
-                    startPos = centerY - quarterHeight;
-                    endPos = centerY + quarterHeight;
+                    startPos = centerY - heightDelta;
+                    endPos = centerY + heightDelta;
                 }
                 prevRefTag = refEl.getTagName();
                 prevRefText = refEl.getText();
@@ -119,7 +124,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
                         .release()
                         .perform();
 
-                target = getElementToCheckVisibility(place);
+                target = placeFinder.apply(place);
             }
             driver().manage().timeouts().implicitlyWait(originalImplicitWait, TimeUnit.MILLISECONDS);
         }
