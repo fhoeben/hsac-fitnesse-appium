@@ -56,8 +56,8 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
     }
 
     @Override
-    public boolean scrollTo(String locator) {
-        MobileElement target = getElementToCheckVisibility(locator);
+    public boolean scrollTo(String place) {
+        MobileElement target = getElementToCheckVisibility(place);
         if (target == null) {
             String prevRefTag = null;
             String prevRefText = null;
@@ -67,7 +67,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
             Point center;
             MobileElement topScrollable = findByXPath("(//*[@scrollable='true'])[1]");
 
-            System.out.println("Scroll to: " + locator);
+            System.out.println("Scroll to: " + place);
             long originalImplicitWait = 0;
             if (null != topScrollable) {
                 dimensions = topScrollable.getSize();
@@ -116,7 +116,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
                         .release()
                         .perform();
 
-                target = getElementToCheckVisibility(locator);
+                target = getElementToCheckVisibility(place);
             }
             driver().manage().timeouts().implicitlyWait(originalImplicitWait, TimeUnit.MILLISECONDS);
         }
