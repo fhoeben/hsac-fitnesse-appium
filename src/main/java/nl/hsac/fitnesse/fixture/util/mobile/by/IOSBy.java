@@ -17,11 +17,11 @@ public class IOSBy {
             "or contains(@value,'%1$s')]";
 
     public static By exactText(String text) {
-        return new XPathBy("//*" + CONTAINS_EXACT, text);
+        return new XPathBy(".//*" + CONTAINS_EXACT, text);
     }
 
     public static By partialText(String text) {
-        return new XPathBy("//*" + CONTAINS_PARTIAL, text);
+        return new XPathBy(".//*" + CONTAINS_PARTIAL, text);
     }
 
     public static HeuristicBy<IOSElement> heuristic(String text) {

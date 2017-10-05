@@ -127,7 +127,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
         if (target == null) {
             Dimension dimensions;
             Point center;
-            MobileElement topScrollable = findByXPath("(//*[@scrollable='true'])[1]");
+            MobileElement topScrollable = findByXPath("(.//*[@scrollable='true'])[1]");
 
             System.out.println("Scroll to: " + place);
             if (topScrollable == null) {
@@ -150,7 +150,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
                 System.out.println("Value not yet found, scroll");
-                MobileElement refEl = findByXPath("(//*[@scrollable='true']//*[@clickable='true'])[1]");
+                MobileElement refEl = findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
                 boolean sameEl = (null != prevRefTag &&
                         refEl.getTagName().equals(prevRefTag) &&
                         refEl.getText().equals(prevRefText) &&
