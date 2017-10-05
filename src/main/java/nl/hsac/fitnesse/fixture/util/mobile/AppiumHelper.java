@@ -120,15 +120,15 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     @Override
     public void scrollTo(WebElement element) {
         if (!element.isDisplayed()) {
-            scrollTo(2, 0.5, element.toString(), x -> (T) element);
+            scrollTo(0.5, element.toString(), x -> (T) element);
         }
     }
 
     public boolean scrollTo(String place) {
-        return scrollTo(2, 0.5, place, this::getElementToCheckVisibility);
+        return scrollTo(0.5, place, this::getElementToCheckVisibility);
     }
 
-    public boolean scrollTo(int maxBumps, double swipeDistance, String place, Function<String, T> placeFinder) {
+    public boolean scrollTo(double swipeDistance, String place, Function<String, T> placeFinder) {
         MobileElement target = placeFinder.apply(place);
         if (target == null) {
             LOGGER.debug("Scroll to: {}", place);
@@ -152,24 +152,28 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
             ElementProperties prevRef = null;
 
+            // counter for hitting top/bottom: 0=no hit yet, 1=hit top, 2=hit bottom
             int bumps = 0;
-            while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
+            while ((target == null || !target.isDisplayed()) && bumps < 2) {
                 MobileElement refEl = findScrollRefElement();
                 ElementProperties currentRef = refEl != null ? new ElementProperties(refEl) : null;
                 int scrollStart;
                 int scrollEnd;
-                boolean sameEl = currentRef != null && currentRef.equals(prevRef);
-                if (bumps > 0 || sameEl) {
-                    LOGGER.debug("Going down!");
-                    scrollStart = lowPoint;
-                    scrollEnd = highPoint;
-                    if (sameEl) {
-                        bumps++;
-                    }
-                } else {
+                if (bumps == 0) {
+                    // did not hit top of screen, yet
                     LOGGER.debug("Going up!");
                     scrollStart = highPoint;
                     scrollEnd = lowPoint;
+                } else {
+                    // hit top already
+                    LOGGER.debug("Going down!");
+                    scrollStart = lowPoint;
+                    scrollEnd = highPoint;
+                }
+                if (currentRef != null && currentRef.equals(prevRef)) {
+                    // element remained same, we didn't actually scroll since last iteration
+                    // this means we either hit top (if we were going up) or botton (if we were going down)
+                    bumps++;
                 }
                 performScroll(centerX, scrollStart, scrollEnd);
 
