@@ -134,7 +134,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             LOGGER.debug("Scroll to: {}", place);
             Dimension dimensions;
             Point center;
-            MobileElement topScrollable = findByXPath("(.//*[@scrollable='true'])[1]");
+            MobileElement topScrollable = findTopScrollable();
 
             if (topScrollable == null) {
                 dimensions = getWindowSize();
@@ -154,7 +154,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < maxBumps) {
-                MobileElement refEl = findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
+                MobileElement refEl = findScrollRefElement();
                 ElementProperties currentRef = new ElementProperties(refEl);
                 int scrollStart;
                 int scrollEnd;
@@ -178,6 +178,14 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
             }
         }
         return target != null && target.isDisplayed();
+    }
+
+    protected MobileElement findTopScrollable() {
+        return findByXPath("(.//*[@scrollable='true'])[1]");
+    }
+
+    protected T findScrollRefElement() {
+        return findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
     }
 
     protected TouchAction performScroll(int centerX, int scrollStart, int scrollEnd) {
