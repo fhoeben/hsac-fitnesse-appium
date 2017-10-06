@@ -36,7 +36,7 @@ public class AndroidHelper extends AppiumHelper<AndroidElement, AndroidDriver<An
 
 	@Override
 	protected By getClickBy(String place) {
-		return AndroidBy.heuristic(place);
+		return AndroidBy.clickableHeuristic(place);
 	}
 
 	@Override

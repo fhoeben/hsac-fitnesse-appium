@@ -24,7 +24,19 @@ public class IOSBy {
         return new XPathBy(".//*" + CONTAINS_PARTIAL, text);
     }
 
+    public static By exactButtonText(String text) {
+        return new XPathBy(".//XCUIElementTypeButton" + CONTAINS_EXACT, text);
+    }
+
+    public static By partialButtonText(String text) {
+        return new XPathBy(".//XCUIElementTypeButton" + CONTAINS_PARTIAL, text);
+    }
+
     public static HeuristicBy<IOSElement> heuristic(String text) {
         return new HeuristicBy<>(exactText(text), partialText(text));
+    }
+
+    public static HeuristicBy<IOSElement> buttonHeuristic(String text) {
+        return new HeuristicBy<>(exactButtonText(text), partialButtonText(text));
     }
 }
