@@ -26,7 +26,19 @@ public class AndroidBy {
         return new XPathBy(".//*" + CONTAINS_PARTIAL, text);
     }
 
+    public static By exactButtonText(String text) {
+        return new XPathBy(".//android.widget.Button" + CONTAINS_EXACT, text);
+    }
+
+    public static By partialButtonText(String text) {
+        return new XPathBy(".//android.widget.Button" + CONTAINS_PARTIAL, text);
+    }
+
     public static HeuristicBy<AndroidElement> heuristic(String text) {
         return new HeuristicBy<>(exactText(text), partialText(text));
+    }
+
+    public static HeuristicBy<AndroidElement> buttonHeuristic(String text) {
+        return new HeuristicBy<>(exactButtonText(text), partialButtonText(text));
     }
 }

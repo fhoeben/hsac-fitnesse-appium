@@ -4,6 +4,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import nl.hsac.fitnesse.fixture.util.mobile.by.IOSBy;
+import nl.hsac.fitnesse.fixture.util.selenium.by.HeuristicBy;
 import org.openqa.selenium.By;
 
 import java.util.function.Function;
@@ -35,7 +36,7 @@ public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
 
     @Override
     protected By getClickBy(String place) {
-        return IOSBy.heuristic(place);
+        return new HeuristicBy<>(IOSBy.buttonHeuristic(place), IOSBy.heuristic(place));
     }
 
     @Override
