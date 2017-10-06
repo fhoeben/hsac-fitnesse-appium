@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
+import nl.hsac.fitnesse.fixture.util.mobile.scroll.ScrollHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.by.ConstantBy;
@@ -22,7 +23,7 @@ import static nl.hsac.fitnesse.fixture.util.selenium.by.TechnicalSelectorBy.byIf
  */
 public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> extends SeleniumHelper<T> {
     private final static Function<String, By> ACCESSIBILITY_BY = byIfStartsWith("accessibility", MobileBy::AccessibilityId);
-    private ScrollHelper<T, D> scrollHelper = new ScrollHelper<>(this);
+    private ScrollHelper<T, D> scrollHelper;
 
     @Override
     public D driver() {
@@ -121,6 +122,9 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     }
 
     public ScrollHelper<T, D> getScrollHelper() {
+        if (scrollHelper == null) {
+            scrollHelper = new ScrollHelper<>(this);
+        }
         return scrollHelper;
     }
 

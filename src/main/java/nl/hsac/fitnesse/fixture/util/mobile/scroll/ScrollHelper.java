@@ -1,8 +1,9 @@
-package nl.hsac.fitnesse.fixture.util.mobile;
+package nl.hsac.fitnesse.fixture.util.mobile.scroll;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
+import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -89,7 +90,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return refEl != null ? Optional.of(new ElementProperties(refEl)) : Optional.empty();
     }
 
-    protected MobileElement findTopScrollable() {
+    protected T findTopScrollable() {
         return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView'])[1]");
     }
 
