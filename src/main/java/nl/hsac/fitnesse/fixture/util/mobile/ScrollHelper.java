@@ -50,13 +50,13 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
             int lowPoint = centerY + heightDelta;
             int highPoint = centerY - heightDelta;
 
-            ElementProperties prevRef = null;
+            Object prevRef = null;
 
             // counter for hitting top/bottom: 0=no hit yet, 1=hit top, 2=hit bottom
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < 2) {
                 MobileElement refEl = findScrollRefElement();
-                ElementProperties currentRef = refEl != null ? new ElementProperties(refEl) : null;
+                Object currentRef = createElmentProperties(refEl);
                 int scrollStart;
                 int scrollEnd;
                 if (bumps == 0) {
@@ -82,6 +82,10 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
             }
         }
         return target != null && target.isDisplayed();
+    }
+
+    protected Object createElmentProperties(MobileElement refEl) {
+        return refEl != null ? new ElementProperties(refEl) : null;
     }
 
     protected MobileElement findTopScrollable() {
