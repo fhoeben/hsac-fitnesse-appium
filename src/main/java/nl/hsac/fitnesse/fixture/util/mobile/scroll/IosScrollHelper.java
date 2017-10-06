@@ -16,11 +16,11 @@ public class IosScrollHelper extends ScrollHelper<IOSElement, IOSDriver<IOSEleme
 
     @Override
     protected IOSElement findTopScrollable() {
-        return helper.findByXPath("(.//UIAScrollView)[1]");
+        return helper.findByXPath(".//UIAScrollView");
     }
 
     @Override
     protected IOSElement findScrollRefElement() {
-        return helper.findByXPath("(.//UIAScrollView//UIAStaticText)[1]");
+        return helper.findByXPath(".//UIAScrollView//UIAStaticText");
     }
 }
