@@ -11,10 +11,12 @@ import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
 public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> extends BrowserTest<T> {
     public MobileTest() {
         super();
+        setImplicitFindInFramesTo(false);
     }
 
     public MobileTest(int secondsBeforeTimeout) {
         super(secondsBeforeTimeout);
+        setImplicitFindInFramesTo(false);
     }
 
     public boolean launchApp() {
