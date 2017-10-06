@@ -4,7 +4,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import nl.hsac.fitnesse.fixture.util.mobile.by.AndroidBy;
-import nl.hsac.fitnesse.fixture.util.selenium.by.HeuristicBy;
 import org.openqa.selenium.By;
 
 import java.util.function.Function;
@@ -32,7 +31,7 @@ public class AndroidHelper extends AppiumHelper<AndroidElement, AndroidDriver<An
 
 	@Override
 	protected By getClickBy(String place) {
-		return new HeuristicBy<>(AndroidBy.buttonHeuristic(place), AndroidBy.heuristic(place));
+		return AndroidBy.clickableHeuristic(place);
 	}
 
 	@Override
