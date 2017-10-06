@@ -128,7 +128,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
         this.scrollHelper = scrollHelper;
     }
 
-    protected TouchAction getTouchAction() {
+    public TouchAction getTouchAction() {
         return new TouchAction(driver());
     }
 }
