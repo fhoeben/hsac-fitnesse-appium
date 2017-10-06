@@ -23,7 +23,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
 
     protected final AppiumHelper<T, D> helper;
 
-    protected Duration waitBetweenScrollPressAndMove = Duration.ofMillis(400);
+    private Duration waitBetweenScrollPressAndMove = Duration.ofMillis(400);
 
     public ScrollHelper(AppiumHelper<T, D> helper) {
         this.helper = helper;
@@ -58,27 +58,19 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
             while ((target == null || !target.isDisplayed()) && bumps < 2) {
                 MobileElement refEl = findScrollRefElement();
                 Optional<?> currentRef = createHashForElement(refEl);
-                int scrollStart;
-                int scrollEnd;
                 if (bumps == 0) {
                     // did not hit top of screen, yet
-                    LOGGER.debug("Going up!");
-                    scrollStart = highPoint;
-                    scrollEnd = lowPoint;
+                    scrollUp(centerX, lowPoint, highPoint);
                 } else {
-                    // hit top already
-                    LOGGER.debug("Going down!");
-                    scrollStart = lowPoint;
-                    scrollEnd = highPoint;
+                    scrollDown(centerX, lowPoint, highPoint);
                 }
+
                 if (currentRef.equals(prevRef)) {
                     // we either are: unable to find a reference element OR
                     // element remained same, we didn't actually scroll since last iteration
                     // this means we either hit top (if we were going up) or botton (if we were going down)
                     bumps++;
                 }
-                performScroll(centerX, scrollStart, scrollEnd);
-
                 prevRef = currentRef;
                 target = placeFinder.apply(place);
             }
@@ -98,6 +90,16 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView']//*[@clickable='true' or @type='UIAStaticText'])[1]");
     }
 
+    protected void scrollUp(int centerX, int lowPoint, int highPoint) {
+        LOGGER.debug("Going up!");
+        performScroll(centerX, highPoint, lowPoint);
+    }
+
+    protected void scrollDown(int centerX, int lowPoint, int highPoint) {
+        LOGGER.debug("Going down!");
+        performScroll(centerX, lowPoint, highPoint);
+    }
+
     protected TouchAction performScroll(int centerX, int scrollStart, int scrollEnd) {
         return helper.getTouchAction()
                 .press(centerX, scrollStart)
@@ -105,6 +107,14 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
                 .moveTo(0, scrollEnd - scrollStart)
                 .release()
                 .perform();
+    }
+
+    public Duration getWaitBetweenScrollPressAndMove() {
+        return waitBetweenScrollPressAndMove;
+    }
+
+    public void setWaitBetweenScrollPressAndMove(Duration waitBetweenScrollPressAndMove) {
+        this.waitBetweenScrollPressAndMove = waitBetweenScrollPressAndMove;
     }
 
     /**
