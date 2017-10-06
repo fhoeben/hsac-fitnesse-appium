@@ -92,17 +92,17 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView']//*[@clickable='true' or @type='UIAStaticText'])[1]");
     }
 
-    protected void scrollUp(int centerX, int lowPoint, int highPoint) {
+    public void scrollUp(int centerX, int lowPoint, int highPoint) {
         LOGGER.debug("Going up!");
         performScroll(centerX, highPoint, lowPoint);
     }
 
-    protected void scrollDown(int centerX, int lowPoint, int highPoint) {
+    public void scrollDown(int centerX, int lowPoint, int highPoint) {
         LOGGER.debug("Going down!");
         performScroll(centerX, lowPoint, highPoint);
     }
 
-    protected void performScroll(int centerX, int scrollStart, int scrollEnd) {
+    public void performScroll(int centerX, int scrollStart, int scrollEnd) {
         TouchAction ta = helper.getTouchAction()
                 .press(centerX, scrollStart)
                 .waitAction(getWaitBetweenScrollPressAndMove())
