@@ -23,8 +23,8 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
 
     protected final AppiumHelper<T, D> helper;
 
-    private Duration waitBetweenScrollPressAndMove = Duration.ofMillis(400);
-    private Duration waitAfterMoveDuration = Duration.ofMillis(200);
+    private Duration waitBetweenScrollPressAndMove = Duration.ofMillis(50);
+    private Duration waitAfterMoveDuration = Duration.ofMillis(20);
 
 
     public ScrollHelper(AppiumHelper<T, D> helper) {
