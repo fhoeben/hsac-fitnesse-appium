@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -108,13 +109,13 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
      */
     protected static class ElementProperties {
         private String tag;
-        private String text;
+        private Optional<String> text;
         private Dimension size;
         private Point location;
 
         public ElementProperties(WebElement element) {
             tag = element.getTagName();
-            text = element.getText();
+            text = Optional.ofNullable(element.getText());
             size = element.getSize();
             location = element.getLocation();
         }
