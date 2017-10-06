@@ -90,11 +90,11 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
     }
 
     protected MobileElement findTopScrollable() {
-        return helper.findByXPath("(.//*[@scrollable='true'])[1]");
+        return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView'])[1]");
     }
 
     protected T findScrollRefElement() {
-        return helper.findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
+        return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView']//*[@clickable='true' or @type='UIAStaticText'])[1]");
     }
 
     protected TouchAction performScroll(int centerX, int scrollStart, int scrollEnd) {
