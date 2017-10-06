@@ -8,7 +8,6 @@ import nl.hsac.fitnesse.fixture.util.mobile.AndroidHelper;
  * Helper to deal with scrolling for Android.
  */
 public class AndroidScrollHelper extends ScrollHelper<AndroidElement, AndroidDriver<AndroidElement>> {
-
     public AndroidScrollHelper(AndroidHelper helper) {
         super(helper);
     }

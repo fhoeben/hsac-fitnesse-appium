@@ -24,6 +24,8 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
     protected final AppiumHelper<T, D> helper;
 
     private Duration waitBetweenScrollPressAndMove = Duration.ofMillis(400);
+    private Duration waitAfterMoveDuration = Duration.ofMillis(200);
+
 
     public ScrollHelper(AppiumHelper<T, D> helper) {
         this.helper = helper;
@@ -100,13 +102,19 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         performScroll(centerX, lowPoint, highPoint);
     }
 
-    protected TouchAction performScroll(int centerX, int scrollStart, int scrollEnd) {
-        return helper.getTouchAction()
+    protected void performScroll(int centerX, int scrollStart, int scrollEnd) {
+        TouchAction ta = helper.getTouchAction()
                 .press(centerX, scrollStart)
-                .waitAction(waitBetweenScrollPressAndMove)
-                .moveTo(0, scrollEnd - scrollStart)
-                .release()
-                .perform();
+                .waitAction(getWaitBetweenScrollPressAndMove())
+                .moveTo(0, scrollEnd - scrollStart);
+
+        Duration waitAfterMove = getWaitAfterMoveDuration();
+        if (waitAfterMove != null) {
+            ta = ta.waitAction(waitAfterMove);
+        }
+
+        ta.release()
+            .perform();
     }
 
     public Duration getWaitBetweenScrollPressAndMove() {
@@ -115,6 +123,14 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
 
     public void setWaitBetweenScrollPressAndMove(Duration waitBetweenScrollPressAndMove) {
         this.waitBetweenScrollPressAndMove = waitBetweenScrollPressAndMove;
+    }
+
+    public Duration getWaitAfterMoveDuration() {
+        return waitAfterMoveDuration;
+    }
+
+    public void setWaitAfterMoveDuration(Duration waitAfterMoveDuration) {
+        this.waitAfterMoveDuration = waitAfterMoveDuration;
     }
 
     /**
