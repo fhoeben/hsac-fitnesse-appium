@@ -56,7 +56,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
             int bumps = 0;
             while ((target == null || !target.isDisplayed()) && bumps < 2) {
                 MobileElement refEl = findScrollRefElement();
-                Optional<?> currentRef = createElmentProperties(refEl);
+                Optional<?> currentRef = createHashForElement(refEl);
                 int scrollStart;
                 int scrollEnd;
                 if (bumps == 0) {
@@ -85,7 +85,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return target != null && target.isDisplayed();
     }
 
-    protected Optional<?> createElmentProperties(MobileElement refEl) {
+    protected Optional<?> createHashForElement(MobileElement refEl) {
         return refEl != null ? Optional.of(new ElementProperties(refEl)) : Optional.empty();
     }
 
