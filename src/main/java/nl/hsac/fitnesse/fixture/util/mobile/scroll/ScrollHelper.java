@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
+import nl.hsac.fitnesse.fixture.util.mobile.by.IsDisplayedFilter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -84,7 +85,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
     }
 
     protected boolean targetIsReached(T target) {
-        return target != null && target.isDisplayed();
+        return IsDisplayedFilter.mayPass(target);
     }
 
     protected Optional<?> createHashForElement(T refEl) {
