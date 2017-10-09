@@ -28,11 +28,11 @@ public class IOSBy {
     }
 
     public static HeuristicBy<IOSElement> heuristic(String text) {
-        return new HeuristicBy<>(exactText(text), partialText(text));
+        return new HeuristicBy<>(MobileBy.AccessibilityId(text), exactText(text), partialText(text));
     }
 
     public static HeuristicBy<IOSElement> buttonHeuristic(String text) {
-        return new HeuristicBy<>(exactButtonText(text), partialButtonText(text));
+        return new HeuristicBy<>(MobileBy.AccessibilityId(text), exactButtonText(text), partialButtonText(text));
     }
 
     public static class ClassChain extends LazyPatternBy {

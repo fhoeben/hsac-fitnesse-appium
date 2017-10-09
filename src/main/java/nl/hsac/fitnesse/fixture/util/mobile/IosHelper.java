@@ -51,6 +51,6 @@ public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
 
     @Override
     protected By getElementToCheckVisibilityBy(String text) {
-        return IOSBy.partialText(text);
+        return new HeuristicBy<>(MobileBy.AccessibilityId(text), IOSBy.partialText(text));
     }
 }
