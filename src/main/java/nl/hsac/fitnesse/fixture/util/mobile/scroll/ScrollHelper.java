@@ -32,13 +32,13 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         this.helper = helper;
     }
 
-    public boolean scrollTo(double swipeDistance, String place, Function<String, T> placeFinder) {
-        MobileElement target = placeFinder.apply(place);
+    public boolean scrollTo(double swipeDistance, String place, Function<String, ? extends T> placeFinder) {
+        T target = placeFinder.apply(place);
         if (!targetIsReached(target)) {
             LOGGER.debug("Scroll to: {}", place);
             Dimension dimensions;
             Point center;
-            MobileElement topScrollable = findTopScrollable();
+            T topScrollable = findTopScrollable();
 
             if (topScrollable == null) {
                 dimensions = helper.getWindowSize();
@@ -59,7 +59,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
             // counter for hitting top/bottom: 0=no hit yet, 1=hit top, 2=hit bottom
             int bumps = 0;
             while (!targetIsReached(target) && bumps < 2) {
-                MobileElement refEl = findScrollRefElement(topScrollable);
+                T refEl = findScrollRefElement(topScrollable);
                 Optional<?> currentRef = createHashForElement(refEl);
                 if (bumps == 0) {
                     // did not hit top of screen, yet
@@ -81,11 +81,11 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return targetIsReached(target);
     }
 
-    protected boolean targetIsReached(MobileElement target) {
+    protected boolean targetIsReached(T target) {
         return target != null && target.isDisplayed();
     }
 
-    protected Optional<?> createHashForElement(MobileElement refEl) {
+    protected Optional<?> createHashForElement(T refEl) {
         return refEl != null ? Optional.of(new ElementProperties(refEl)) : Optional.empty();
     }
 
@@ -93,7 +93,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView'])[1]");
     }
 
-    protected T findScrollRefElement(MobileElement topScrollable) {
+    protected T findScrollRefElement(T topScrollable) {
         T result;
         if (topScrollable == null || !topScrollable.isDisplayed()) {
             result = helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView']//*[@clickable='true' or @type='UIAStaticText'])[1]");

@@ -1,6 +1,5 @@
 package nl.hsac.fitnesse.fixture.util.mobile.scroll;
 
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import nl.hsac.fitnesse.fixture.util.mobile.AndroidHelper;
@@ -20,7 +19,7 @@ public class AndroidScrollHelper extends ScrollHelper<AndroidElement, AndroidDri
     }
 
     @Override
-    protected AndroidElement findScrollRefElement(MobileElement topScrollable) {
+    protected AndroidElement findScrollRefElement(AndroidElement topScrollable) {
         AndroidElement result;
         if (topScrollable == null || !topScrollable.isDisplayed()) {
             result = helper.findByXPath("(.//*[@scrollable='true']//*[@clickable='true'])[1]");
