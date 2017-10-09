@@ -17,11 +17,11 @@ public class IosScrollHelper extends ScrollHelper<IOSElement, IOSDriver<IOSEleme
 
     @Override
     protected IOSElement findTopScrollable() {
-        return helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`]"));
+        return helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`][1]"));
     }
 
     @Override
     protected IOSElement findScrollRefElement() {
-        return helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`]/**/XCUIElementTypeStaticText[`visible == 1`]"));
+        return helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`]/**/XCUIElementTypeStaticText[`visible == 1`][1]"));
     }
 }
