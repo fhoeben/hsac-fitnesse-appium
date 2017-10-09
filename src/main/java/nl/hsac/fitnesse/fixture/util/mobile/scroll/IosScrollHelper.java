@@ -1,9 +1,11 @@
 package nl.hsac.fitnesse.fixture.util.mobile.scroll;
 
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import nl.hsac.fitnesse.fixture.util.mobile.IosHelper;
+import nl.hsac.fitnesse.fixture.util.mobile.by.IOSBy;
 
 /**
  * Helper to deal with scrolling for iOS.
@@ -21,7 +23,13 @@ public class IosScrollHelper extends ScrollHelper<IOSElement, IOSDriver<IOSEleme
     }
 
     @Override
-    protected IOSElement findScrollRefElement() {
-        return helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`]/**/XCUIElementTypeStaticText[`visible == 1`][1]"));
+    protected IOSElement findScrollRefElement(MobileElement topScrollable) {
+        IOSElement result;
+        if (topScrollable == null || !topScrollable.isDisplayed()) {
+            result = helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`]/**/XCUIElementTypeStaticText[`visible == 1`][1]"));
+        } else {
+            result = helper.findElement(topScrollable, new IOSBy.Predicate("type=='XCUIElementTypeStaticText' AND visible==1"));
+        }
+        return result;
     }
 }

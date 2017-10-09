@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -58,7 +59,7 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
             // counter for hitting top/bottom: 0=no hit yet, 1=hit top, 2=hit bottom
             int bumps = 0;
             while (!targetIsReached(target) && bumps < 2) {
-                MobileElement refEl = findScrollRefElement();
+                MobileElement refEl = findScrollRefElement(topScrollable);
                 Optional<?> currentRef = createHashForElement(refEl);
                 if (bumps == 0) {
                     // did not hit top of screen, yet
@@ -92,8 +93,14 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView'])[1]");
     }
 
-    protected T findScrollRefElement() {
-        return helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView']//*[@clickable='true' or @type='UIAStaticText'])[1]");
+    protected T findScrollRefElement(MobileElement topScrollable) {
+        T result;
+        if (topScrollable == null || !topScrollable.isDisplayed()) {
+            result = helper.findByXPath("(.//*[@scrollable='true' or @type='UIAScrollView']//*[@clickable='true' or @type='UIAStaticText'])[1]");
+        } else {
+            result = helper.findElement(topScrollable, By.xpath("(.//*[@clickable='true' or @type='UIAStaticText'])[1]"));
+        }
+        return result;
     }
 
     public void scrollUp(int centerX, int lowPoint, int highPoint) {
