@@ -1,14 +1,16 @@
 package nl.hsac.fitnesse.fixture.util.mobile.by;
 
-import nl.hsac.fitnesse.fixture.util.selenium.by.IsInteractableFilter;
 import org.openqa.selenium.WebElement;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Function to be used as post-processor when finding elements.
  * It will filter out non-visible elements.
  * @param <T> type of element to return.
  */
-public class IsDisplayedFilter<T extends WebElement> extends IsInteractableFilter<T> {
+public class IsDisplayedFilter<T extends WebElement> implements Function<T, T>, Supplier<T> {
     private T firstFound;
 
     /**
