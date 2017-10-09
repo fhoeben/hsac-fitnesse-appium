@@ -17,7 +17,7 @@ public class IosScrollHelper extends ScrollHelper<IOSElement, IOSDriver<IOSEleme
 
     @Override
     protected IOSElement findTopScrollable() {
-        return helper.findElement(MobileBy.iOSClassChain("**/XCUIElementTypeScrollView[`visible == 1`][1]"));
+        return helper.findElement(MobileBy.iOSNsPredicateString("type=='XCUIElementTypeScrollView' AND visible==1]"));
     }
 
     @Override
