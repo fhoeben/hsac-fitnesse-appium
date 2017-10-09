@@ -7,9 +7,9 @@ import nl.hsac.fitnesse.fixture.util.selenium.by.LazyPatternBy;
 import org.openqa.selenium.By;
 
 public class IOSBy {
-    private static final String CONTAINS_EXACT = "[`name==\"%1$s\" OR label==\"%1$s\"` OR value==\"%1$s\"` OR hint==\"%1$s\"`]";
+    private static final String CONTAINS_EXACT = "[`name==\"%1$s\" OR label==\"%1$s\" OR value==\"%1$s\"`]";
 
-    private static final String CONTAINS_PARTIAL = "[`name CONTAINS \"%1$s\" OR label CONTAINS \"%1$s\"` OR value CONTAINS \"%1$s\"` OR hint CONTAINS \"%1$s\"`]";
+    private static final String CONTAINS_PARTIAL = "[`name CONTAINS \"%1$s\" OR label CONTAINS \"%1$s\" OR value CONTAINS \"%1$s\"`]";
 
     public static By exactText(String text) {
         return new ClassChain("**/*" + CONTAINS_EXACT, text);
