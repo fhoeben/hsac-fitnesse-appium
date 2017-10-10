@@ -3,6 +3,8 @@ package nl.hsac.fitnesse.fixture.util.mobile;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import nl.hsac.fitnesse.fixture.Environment;
+import nl.hsac.fitnesse.fixture.util.mobile.element.MobileElementConverter;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.by.BestMatchBy;
 import nl.hsac.fitnesse.fixture.util.selenium.driverfactory.DriverFactory;
@@ -36,10 +38,25 @@ public class AppiumDriverManager extends DriverManager {
             helper = super.createHelper(driver);
         }
         if (driver instanceof AppiumDriver) {
-            // selecting the 'best macth' should not be done by checking whats on top via Javascript
-            BestMatchBy.setBestFunction(this::selectBestElement);
+            AppiumDriver d = (AppiumDriver) driver;
+            setBestFunction(d);
+            setMobileElementConverter(d);
         }
         return helper;
+    }
+
+    protected void setBestFunction(AppiumDriver d) {
+        // selecting the 'best macth' should not be done by checking whats on top via Javascript
+        BestMatchBy.setBestFunction(this::selectBestElement);
+    }
+
+    protected void setMobileElementConverter(AppiumDriver d) {
+        MobileElementConverter converter = createMobileElementConverter(d);
+        Environment.getInstance().getReflectionHelper().setField(d, "converter", converter);
+    }
+
+    protected MobileElementConverter createMobileElementConverter(AppiumDriver d) {
+        return new MobileElementConverter(d, d);
     }
 
     protected SeleniumHelper createHelperForIos() {
