@@ -2,7 +2,6 @@ package nl.hsac.fitnesse.fixture.util.mobile.by;
 
 import org.openqa.selenium.WebElement;
 
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -35,31 +34,12 @@ public class IsDisplayedFilter<T extends WebElement> implements Function<T, T>, 
         return firstFound;
     }
 
-    private static long lastCheckTs;
-    private static Optional<WebElement> lastCheckElem = Optional.empty();
-    private static boolean lastCheckResult;
-
-    /**
-     * Checks whether element is displayed.
-     * @param element element to check.
-     * @return true for visible elements, false otherwise.
-     */
-    public static boolean mayPass(WebElement element) {
-        Optional<WebElement> current = Optional.ofNullable(element);
-        if (!lastCheckElem.equals(current) || lastCheckTs < System.currentTimeMillis() - 500) {
-            lastCheckResult = mayPassImpl(element);
-            lastCheckElem = current;
-            lastCheckTs = System.currentTimeMillis();
-        }
-        return lastCheckResult;
-    }
-
     /**
      * Checks whether element is displayed, without caching.
      * @param element element to check.
      * @return true for visible elements, false otherwise.
      */
-    public static boolean mayPassImpl(WebElement element) {
+    public static boolean mayPass(WebElement element) {
         return element != null && element.isDisplayed();
     }
 }

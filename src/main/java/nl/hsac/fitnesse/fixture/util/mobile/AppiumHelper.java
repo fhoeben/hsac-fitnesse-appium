@@ -5,7 +5,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import nl.hsac.fitnesse.fixture.util.mobile.by.AppiumHeuristicBy;
-import nl.hsac.fitnesse.fixture.util.mobile.by.CachingIsInteractableFilter;
 import nl.hsac.fitnesse.fixture.util.mobile.scroll.ScrollHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
@@ -81,11 +80,6 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     @Override
     public void setPageLoadWait(int pageLoadWait) {
         // Not setting page load timeout as Appium does not support it
-    }
-
-    @Override
-    public boolean isInteractable(WebElement element) {
-        return CachingIsInteractableFilter.mayPass(element);
     }
 
     @Override
