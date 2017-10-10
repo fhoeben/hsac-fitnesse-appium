@@ -44,7 +44,7 @@ public class CachingIsInteractableFilter<T extends WebElement> implements Functi
    */
   public static boolean mayPass(WebElement element) {
     Optional<WebElement> current = Optional.ofNullable(element);
-    if (!lastCheckElem.equals(current) || lastCheckTs < System.currentTimeMillis() - 1000) {
+    if (!lastCheckElem.equals(current) || lastCheckTs < System.currentTimeMillis() - 500) {
       lastCheckResult = IsInteractableFilter.mayPass(element);
       lastCheckElem = current;
       lastCheckTs = System.currentTimeMillis();

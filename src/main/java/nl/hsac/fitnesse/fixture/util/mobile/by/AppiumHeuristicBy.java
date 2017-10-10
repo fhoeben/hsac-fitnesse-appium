@@ -15,7 +15,7 @@ import static nl.hsac.fitnesse.fixture.util.FirstNonNullHelper.firstNonNull;
 
 public class AppiumHeuristicBy<T extends MobileElement> extends HeuristicBy<T> {
   public AppiumHeuristicBy(By firstNested, By... extraNestedBys) {
-    super(firstNested, extraNestedBys);
+    super(new CachingIsInteractableFilter<>(), firstNested, extraNestedBys);
   }
 
   public AppiumHeuristicBy(Function<? super T, ? extends T> postProcessor, By firstNested, By... extraNestedBys) {

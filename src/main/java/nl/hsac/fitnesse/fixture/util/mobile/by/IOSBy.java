@@ -2,7 +2,6 @@ package nl.hsac.fitnesse.fixture.util.mobile.by;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSElement;
-import nl.hsac.fitnesse.fixture.util.selenium.by.HeuristicBy;
 import nl.hsac.fitnesse.fixture.util.selenium.by.LazyPatternBy;
 import org.openqa.selenium.By;
 
@@ -27,12 +26,12 @@ public class IOSBy {
         return new Predicate("type=='XCUIElementTypeButton' AND (" + CONTAINS_PARTIAL + ")", text);
     }
 
-    public static HeuristicBy<IOSElement> heuristic(String text) {
-        return new HeuristicBy<>(MobileBy.AccessibilityId(text), exactText(text), partialText(text));
+    public static AppiumHeuristicBy<IOSElement> heuristic(String text) {
+        return new AppiumHeuristicBy<>(MobileBy.AccessibilityId(text), exactText(text), partialText(text));
     }
 
-    public static HeuristicBy<IOSElement> buttonHeuristic(String text) {
-        return new HeuristicBy<>(MobileBy.AccessibilityId(text), exactButtonText(text), partialButtonText(text));
+    public static AppiumHeuristicBy<IOSElement> buttonHeuristic(String text) {
+        return new AppiumHeuristicBy<>(MobileBy.AccessibilityId(text), exactButtonText(text), partialButtonText(text));
     }
 
     public static class ClassChain extends LazyPatternBy {

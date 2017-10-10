@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
+import nl.hsac.fitnesse.fixture.util.mobile.by.AppiumHeuristicBy;
+import nl.hsac.fitnesse.fixture.util.mobile.by.CachingIsInteractableFilter;
 import nl.hsac.fitnesse.fixture.util.mobile.scroll.ScrollHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
@@ -38,6 +40,17 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     }
 
     /**
+     * Finds the first element matching the supplied criteria, without retrieving all and checking for their visibility.
+     * Searching this way should be faster, when a hit is found. When no hit is found an exception is thrown (and swallowed)
+     * which is bad Java practice, but not slow compared to Appium performance.
+     * @param by criteria to search
+     * @return <code>null</code> if no match found, first element returned otherwise.
+     */
+    public T findFirstElementOnly(By by) {
+        return AppiumHeuristicBy.findFirstElementOnly(by, getCurrentContext());
+    }
+
+    /**
      * @return app page source, which is expected to be XML not HTML.
      */
     @Override
@@ -68,6 +81,11 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     @Override
     public void setPageLoadWait(int pageLoadWait) {
         // Not setting page load timeout as Appium does not support it
+    }
+
+    @Override
+    public boolean isInteractable(WebElement element) {
+        return CachingIsInteractableFilter.mayPass(element);
     }
 
     @Override

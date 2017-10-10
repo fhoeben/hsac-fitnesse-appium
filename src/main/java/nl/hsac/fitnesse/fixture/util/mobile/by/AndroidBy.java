@@ -1,7 +1,6 @@
 package nl.hsac.fitnesse.fixture.util.mobile.by;
 
 import io.appium.java_client.android.AndroidElement;
-import nl.hsac.fitnesse.fixture.util.selenium.by.HeuristicBy;
 import nl.hsac.fitnesse.fixture.util.selenium.by.XPathBy;
 import org.openqa.selenium.By;
 
@@ -61,16 +60,16 @@ public class AndroidBy {
         return new XPathBy(PARTIAL_CLICKABLE_BUTTON_XPATH, text);
     }
 
-    public static HeuristicBy<AndroidElement> heuristic(String text) {
-        return new HeuristicBy<>(exactText(text), partialText(text));
+    public static AppiumHeuristicBy<AndroidElement> heuristic(String text) {
+        return new AppiumHeuristicBy<>(exactText(text), partialText(text));
     }
 
-    public static HeuristicBy<AndroidElement> buttonHeuristic(String text) {
-        return new HeuristicBy<>(exactButtonText(text), partialButtonText(text));
+    public static AppiumHeuristicBy<AndroidElement> buttonHeuristic(String text) {
+        return new AppiumHeuristicBy<>(exactButtonText(text), partialButtonText(text));
     }
 
-    public static HeuristicBy<AndroidElement> clickableHeuristic(String text) {
-        return new HeuristicBy<>(
+    public static AppiumHeuristicBy<AndroidElement> clickableHeuristic(String text) {
+        return new AppiumHeuristicBy<>(
                 exactClickableButton(text), exactClickable(text),
                 partialClickableButton(text), partialClickable(text),
                 buttonHeuristic(text), heuristic(text)
