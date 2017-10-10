@@ -7,6 +7,7 @@ import java.util.function.BooleanSupplier;
  */
 public class BooleanCache {
     private static long maxCacheAge = 500;
+    private static int ageFactor = 3;
 
     private final BooleanSupplier supplier;
     private boolean cachedValue;
@@ -17,9 +18,16 @@ public class BooleanCache {
     }
 
     public boolean getValue() {
-        if (validUntil < System.currentTimeMillis()) {
+        long start = System.currentTimeMillis();
+        if (validUntil < start) {
             cachedValue = supplier.getAsBoolean();
-            validUntil = System.currentTimeMillis() + maxCacheAge;
+            long end = System.currentTimeMillis();
+            if (ageFactor > 0) {
+                long autoAge = (end - start) * ageFactor;
+                validUntil = end + autoAge;
+            } else {
+                validUntil = end + maxCacheAge;
+            }
         }
         return cachedValue;
     }
@@ -30,5 +38,13 @@ public class BooleanCache {
 
     public static long getMaxCacheAge() {
         return maxCacheAge;
+    }
+
+    public static int getAgeFactor() {
+        return ageFactor;
+    }
+
+    public static void setAgeFactor(int ageFactor) {
+        BooleanCache.ageFactor = ageFactor;
     }
 }
