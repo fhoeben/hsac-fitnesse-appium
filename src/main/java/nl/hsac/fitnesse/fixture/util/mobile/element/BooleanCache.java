@@ -17,7 +17,7 @@ public class BooleanCache {
     }
 
     public boolean getValue() {
-        if (validUntil > System.currentTimeMillis()) {
+        if (validUntil < System.currentTimeMillis()) {
             cachedValue = supplier.getAsBoolean();
             validUntil = System.currentTimeMillis() + maxCacheAge;
         }
