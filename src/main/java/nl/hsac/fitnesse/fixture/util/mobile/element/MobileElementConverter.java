@@ -21,16 +21,19 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
         // to get the correct class to instantiate.
         // Lets not do that for iOS and Android
         if (driver instanceof IOSDriver) {
-            RemoteWebElement result = new HsacIOSElement();
-            result.setParent(driver);
-            return result;
+            return createIOSElement();
         } else if (driver instanceof AndroidDriver) {
-            RemoteWebElement result = new HsacAndroidElement();
-            result.setParent(driver);
-            return result;
+            return createAndroidElement();
         } else {
             return super.newMobileElement();
         }
     }
 
+    protected RemoteWebElement createIOSElement() {
+        return new HsacIOSElement();
+    }
+
+    protected RemoteWebElement createAndroidElement() {
+        return new HsacAndroidElement();
+    }
 }
