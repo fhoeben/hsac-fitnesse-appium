@@ -1,9 +1,11 @@
 package nl.hsac.fitnesse.fixture.util.mobile.element;
 
 import io.appium.java_client.HasSessionDetails;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.internal.JsonToMobileElementConverter;
 import io.appium.java_client.ios.IOSDriver;
+import nl.hsac.fitnesse.fixture.util.selenium.caching.CachingRemoteWebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -29,7 +31,11 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
             result.setParent(driver);
             return result;
         } else {
-            return super.newMobileElement();
+            RemoteWebElement newMobileElement = super.newMobileElement();
+            if (!(newMobileElement instanceof MobileElement)) {
+                newMobileElement = new CachingRemoteWebElement(newMobileElement);
+            }
+            return newMobileElement;
         }
     }
 
