@@ -27,11 +27,7 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
         } else if (driver instanceof AndroidDriver) {
             return createAndroidElement();
         } else {
-            RemoteWebElement newMobileElement = super.newMobileElement();
-            if (!(newMobileElement instanceof MobileElement)) {
-                newMobileElement = new CachingRemoteWebElement(newMobileElement);
-            }
-            return newMobileElement;
+            return createOtherNewElement();
         }
     }
 
@@ -41,5 +37,17 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
 
     protected RemoteWebElement createAndroidElement() {
         return new HsacAndroidElement();
+    }
+
+    protected RemoteWebElement createOtherNewElement() {
+        RemoteWebElement newMobileElement = super.newMobileElement();
+        if (!(newMobileElement instanceof MobileElement)) {
+            newMobileElement = handleNonMobileElement(newMobileElement);
+        }
+        return newMobileElement;
+    }
+
+    protected RemoteWebElement handleNonMobileElement(RemoteWebElement element) {
+        return element instanceof CachingRemoteWebElement ? element : new CachingRemoteWebElement(element);
     }
 }
