@@ -4,15 +4,13 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import nl.hsac.fitnesse.fixture.util.selenium.caching.BooleanCache;
 import nl.hsac.fitnesse.fixture.util.selenium.caching.ObjectCache;
+import nl.hsac.fitnesse.fixture.util.selenium.caching.ObjectCacheMap;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.SearchContext;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
 public class HsacAndroidElement extends AndroidElement {
     private BooleanCache isSelectedCache;
@@ -24,11 +22,8 @@ public class HsacAndroidElement extends AndroidElement {
     private ObjectCache<Dimension> sizeCache;
     private ObjectCache<Rectangle> rectCache;
 
-    private Map<String, ObjectCache<String>> attributesCache;
-    private Function<String, ObjectCache<String>> attributeCacheCreationFunction;
-
-    private Map<String, ObjectCache<String>> cssValuesCache;
-    private Function<String, ObjectCache<String>> cssCacheCreationFunction;
+    private ObjectCacheMap<String, String> attributesCache;
+    private ObjectCacheMap<String, String> cssValuesCache;
 
     @Override
     protected void setFoundBy(SearchContext foundFrom, String locator, String term) {
@@ -105,20 +100,16 @@ public class HsacAndroidElement extends AndroidElement {
     @Override
     public String getAttribute(String name) {
         if (attributesCache == null) {
-            attributeCacheCreationFunction = x -> new ObjectCache<>(() -> super.getAttribute(x));
-            attributesCache = new HashMap<>();
+            attributesCache = new ObjectCacheMap<>(super::getAttribute);
         }
-        ObjectCache<String> cache = attributesCache.computeIfAbsent(name, attributeCacheCreationFunction);
-        return cache.getValue();
+        return attributesCache.getValue(name);
     }
 
     @Override
     public String getCssValue(String propertyName) {
         if (cssValuesCache == null) {
-            cssCacheCreationFunction = x -> new ObjectCache<>(() -> super.getCssValue(x));
-            cssValuesCache = new HashMap<>();
+            cssValuesCache = new ObjectCacheMap<>(super::getCssValue);
         }
-        ObjectCache<String> cache = cssValuesCache.computeIfAbsent(propertyName, cssCacheCreationFunction);
-        return cache.getValue();
+        return cssValuesCache.getValue(propertyName);
     }
 }
