@@ -33,6 +33,11 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
         this.helper = helper;
     }
 
+    public boolean scrollTo(T element) {
+        Point p = element.getCoordinates().inViewPort();
+        return p.getX() >= 0 && p.getY() >= 0;
+    }
+
     public boolean scrollTo(double swipeDistance, String place, Function<String, ? extends T> placeFinder) {
         T target = placeFinder.apply(place);
         boolean isReached = targetIsReached(target);

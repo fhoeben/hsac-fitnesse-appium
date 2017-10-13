@@ -42,6 +42,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
      * Finds the first element matching the supplied criteria, without retrieving all and checking for their visibility.
      * Searching this way should be faster, when a hit is found. When no hit is found an exception is thrown (and swallowed)
      * which is bad Java practice, but not slow compared to Appium performance.
+     *
      * @param by criteria to search
      * @return <code>null</code> if no match found, first element returned otherwise.
      */
@@ -130,7 +131,8 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     }
 
     public boolean scrollTo(String place) {
-        return getScrollHelper().scrollTo(0.5, place, this::getElementToCheckVisibility);
+        T element = getElementToCheckVisibility(place);
+        return element != null && getScrollHelper().scrollTo(element);
     }
 
     public ScrollHelper<T, D> getScrollHelper() {
