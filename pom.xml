@@ -39,7 +39,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <fitnesse.version>20161106</fitnesse.version>
-        <hsac.fixtures.version>3.7.0</hsac.fixtures.version>
+        <hsac.fixtures.version>3.8.1</hsac.fixtures.version>
         <appium.version>5.0.4</appium.version>
     </properties>
 
