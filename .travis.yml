@@ -6,7 +6,7 @@ cache:
   directories:
   - $HOME/.m2
 
-script: mvn test -DseleniumCapabilities="testobject_api_key:${API_KEY}, platformVersion:6" -DseleniumDriverClass=io.appium.java_client.android.AndroidDriver -DseleniumGridUrl=https://eu1.appium.testobject.com/wd/hub
+script: mvn test -DseleniumJsonCapabilities="{"testobject_api_key":"${API_KEY}", "resetKeyboard":true}" -DseleniumDriverClass=io.appium.java_client.android.AndroidDriver -DseleniumGridUrl=https://eu1.appium.testobject.com/wd/hub
 
 after_success:
   - "[[ $TRAVIS_BRANCH == \"master\" ]] && { python addServer.py; mvn -DskipTests deploy --settings ~/.m2/mySettings.xml; };"

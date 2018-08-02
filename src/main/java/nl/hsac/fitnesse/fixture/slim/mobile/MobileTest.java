@@ -11,10 +11,12 @@ import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
 public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> extends BrowserTest<T> {
     public MobileTest() {
         super();
+        setImplicitFindInFramesTo(false);
     }
 
     public MobileTest(int secondsBeforeTimeout) {
         super(secondsBeforeTimeout);
+        setImplicitFindInFramesTo(false);
     }
 
     public boolean launchApp() {
@@ -38,9 +40,25 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
     }
 
     @Override
+    protected T getElementToCheckVisibility(String place) {
+        T result = getMobileHelper().getElementToCheckVisibility(place);
+        return result;
+    }
+
+    @Override
     public String savePageSource() {
         String fileName = "xmlView_" + System.currentTimeMillis();
         return savePageSource(fileName, fileName + ".xml");
+    }
+
+    @Override
+    public boolean scrollTo(String place) {
+        return getMobileHelper().scrollTo(place);
+    }
+
+    @Override
+    public boolean scrollToIn(String place, String container) {
+        return doInContainer(container, () -> scrollTo(place));
     }
 
     @Override
@@ -48,6 +66,7 @@ public class MobileTest<T extends MobileElement, D extends AppiumDriver<T>> exte
         return super.getElement(place);
     }
 
+    @Override
     protected T getContainerImpl(String container) {
         return getMobileHelper().getContainer(container);
     }

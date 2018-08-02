@@ -3,6 +3,9 @@ package nl.hsac.fitnesse.fixture.util.mobile;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import nl.hsac.fitnesse.fixture.util.mobile.by.AppiumHeuristicBy;
+import nl.hsac.fitnesse.fixture.util.mobile.scroll.ScrollHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.PageSourceSaver;
 import nl.hsac.fitnesse.fixture.util.selenium.SeleniumHelper;
 import nl.hsac.fitnesse.fixture.util.selenium.by.ConstantBy;
@@ -20,7 +23,8 @@ import static nl.hsac.fitnesse.fixture.util.selenium.by.TechnicalSelectorBy.byIf
  * Specialized helper to deal with appium's web driver.
  */
 public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> extends SeleniumHelper<T> {
-    private static final Function<String, By> ACCESSIBILITY_BY = byIfStartsWith("accessibility", MobileBy::AccessibilityId);
+    private final static Function<String, By> ACCESSIBILITY_BY = byIfStartsWith("accessibility", MobileBy::AccessibilityId);
+    private ScrollHelper<T, D> scrollHelper;
 
     @Override
     public D driver() {
@@ -32,6 +36,17 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
         return firstNonNull(place,
                 super::placeToBy,
                 ACCESSIBILITY_BY);
+    }
+
+    /**
+     * Finds the first element matching the supplied criteria, without retrieving all and checking for their visibility.
+     * Searching this way should be faster, when a hit is found. When no hit is found an exception is thrown (and swallowed)
+     * which is bad Java practice, but not slow compared to Appium performance.
+     * @param by criteria to search
+     * @return <code>null</code> if no match found, first element returned otherwise.
+     */
+    public T findFirstElementOnly(By by) {
+        return AppiumHeuristicBy.findFirstElementOnly(by, getCurrentContext());
     }
 
     /**
@@ -97,5 +112,39 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
 
     protected By getContainerBy(String container) {
         return ConstantBy.nothing();
+    }
+
+    public T getElementToCheckVisibility(String place) {
+        return findByTechnicalSelectorOr(place, this::getElementToCheckVisibilityBy);
+    }
+
+    protected By getElementToCheckVisibilityBy(String place) {
+        return ConstantBy.nothing();
+    }
+
+    @Override
+    public void scrollTo(WebElement element) {
+        if (!element.isDisplayed()) {
+            getScrollHelper().scrollTo(0.5, element.toString(), x -> (T) element);
+        }
+    }
+
+    public boolean scrollTo(String place) {
+        return getScrollHelper().scrollTo(0.5, place, this::getElementToCheckVisibility);
+    }
+
+    public ScrollHelper<T, D> getScrollHelper() {
+        if (scrollHelper == null) {
+            scrollHelper = new ScrollHelper<>(this);
+        }
+        return scrollHelper;
+    }
+
+    public void setScrollHelper(ScrollHelper<T, D> scrollHelper) {
+        this.scrollHelper = scrollHelper;
+    }
+
+    public TouchAction getTouchAction() {
+        return new TouchAction(driver());
     }
 }

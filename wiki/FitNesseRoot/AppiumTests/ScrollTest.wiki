@@ -1,0 +1,20 @@
+---
+Test
+---
+
+We can scroll down
+
+|script    |mobile test  |
+|add       |Wine         |
+|add       |Beer         |
+|add       |bread        |
+|add       |More wine    |
+|add       |More beer    |
+|add       |sliced bread |
+|add       |More butter  |
+|add       |diced carrots|
+|capture screen          |
+|scroll to |Beer         |
+|capture screen          |
+|is visible|Beer         |
+|capture screen          |

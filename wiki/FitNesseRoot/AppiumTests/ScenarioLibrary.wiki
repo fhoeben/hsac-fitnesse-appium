@@ -1,0 +1,7 @@
+|scenario|add _  |item                                                                          |
+|enter   |@{item}|as|xpath=//*[@resource-id='org.openintents.shopping:id/autocomplete_add_item']|
+|click   |Add                                                                                   |
+
+|scenario|capture screen     |
+|show    |take screenshot|app|
+|show    |save page source   |
