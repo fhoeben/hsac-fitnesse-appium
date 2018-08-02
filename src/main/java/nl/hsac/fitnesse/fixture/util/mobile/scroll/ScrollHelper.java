@@ -3,6 +3,8 @@ package nl.hsac.fitnesse.fixture.util.mobile.scroll;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import nl.hsac.fitnesse.fixture.util.mobile.AppiumHelper;
 import nl.hsac.fitnesse.fixture.util.mobile.by.IsDisplayedFilter;
 import org.openqa.selenium.By;
@@ -118,13 +120,13 @@ public class ScrollHelper<T extends MobileElement, D extends AppiumDriver<T>> {
 
     public void performScroll(int centerX, int scrollStart, int scrollEnd) {
         TouchAction ta = helper.getTouchAction()
-                .press(centerX, scrollStart)
-                .waitAction(getWaitBetweenScrollPressAndMove())
-                .moveTo(0, scrollEnd - scrollStart);
+                .press(PointOption.point(centerX, scrollStart))
+                .waitAction(WaitOptions.waitOptions(getWaitBetweenScrollPressAndMove()))
+                .moveTo(PointOption.point(0, scrollEnd - scrollStart));
 
         Duration waitAfterMove = getWaitAfterMoveDuration();
         if (waitAfterMove != null) {
-            ta = ta.waitAction(waitAfterMove);
+            ta = ta.waitAction(WaitOptions.waitOptions(waitAfterMove));
         }
 
         ta.release()

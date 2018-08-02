@@ -6,7 +6,7 @@
 
     <groupId>nl.hsac</groupId>
     <artifactId>hsac-fitnesse-appium</artifactId>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <url>https://github.com/fhoeben/hsac-fitnesse-appium</url>
     <name>HSAC's FitNesse Fixtures for Appium</name>
     <description>Fixtures to assist in mobile app testing via FitNesse</description>
@@ -38,9 +38,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <fitnesse.version>20171210</fitnesse.version>
-        <hsac.fixtures.version>3.13.0</hsac.fixtures.version>
-        <appium.version>5.0.4</appium.version>
+        <fitnesse.version>20180127</fitnesse.version>
+        <hsac.fixtures.version>3.26.0</hsac.fixtures.version>
+        <appium.version>6.1.0</appium.version>
     </properties>
 
     <dependencyManagement>
@@ -49,13 +49,13 @@
                 <!-- Ensure appium dependency does not overrule the selenium api version used -->
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-api</artifactId>
-                <version>3.7.0</version>
+                <version>3.13.0</version>
             </dependency>
             <dependency>
                 <!-- Ensure appium dependency does not overrule the selenium api version used -->
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-support</artifactId>
-                <version>3.7.0</version>
+                <version>3.13.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
