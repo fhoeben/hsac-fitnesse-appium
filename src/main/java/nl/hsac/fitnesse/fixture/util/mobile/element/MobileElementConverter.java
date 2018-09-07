@@ -18,7 +18,7 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
     }
 
     @Override
-    protected RemoteWebElement newMobileElement() {
+    protected RemoteWebElement newRemoteWebElement() {
         // standard newMobileElement will get the session details from server multiple time for each element
         // to get the correct class to instantiate.
         // Lets not do that for iOS and Android
@@ -40,7 +40,7 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
     }
 
     protected RemoteWebElement createOtherNewElement() {
-        RemoteWebElement newMobileElement = super.newMobileElement();
+        RemoteWebElement newMobileElement = super.newRemoteWebElement();
         if (!(newMobileElement instanceof MobileElement)) {
             newMobileElement = handleNonMobileElement(newMobileElement);
         }
