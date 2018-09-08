@@ -6,7 +6,7 @@
 
     <groupId>nl.hsac</groupId>
     <artifactId>hsac-fitnesse-appium</artifactId>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.10</version>
     <url>https://github.com/fhoeben/hsac-fitnesse-appium</url>
     <name>HSAC's FitNesse Fixtures for Appium</name>
     <description>Fixtures to assist in mobile app testing via FitNesse</description>
