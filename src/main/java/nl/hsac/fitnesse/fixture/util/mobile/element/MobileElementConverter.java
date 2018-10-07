@@ -19,16 +19,22 @@ public class MobileElementConverter extends JsonToMobileElementConverter {
 
     @Override
     protected RemoteWebElement newRemoteWebElement() {
+        RemoteWebElement result;
         // standard newMobileElement will get the session details from server multiple time for each element
         // to get the correct class to instantiate.
         // Lets not do that for iOS and Android
         if (driver instanceof IOSDriver) {
-            return createIOSElement();
+            result = createIOSElement();
         } else if (driver instanceof AndroidDriver) {
-            return createAndroidElement();
+            result = createAndroidElement();
         } else {
-            return createOtherNewElement();
+            result = createOtherNewElement();
         }
+
+        result.setParent(driver);
+        result.setFileDetector(driver.getFileDetector());
+
+        return result;
     }
 
     protected RemoteWebElement createIOSElement() {
