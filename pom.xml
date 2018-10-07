@@ -6,7 +6,7 @@
 
     <groupId>nl.hsac</groupId>
     <artifactId>hsac-fitnesse-appium</artifactId>
-    <version>0.0.11</version>
+    <version>0.0.12-SNAPSHOT</version>
     <url>https://github.com/fhoeben/hsac-fitnesse-appium</url>
     <name>HSAC's FitNesse Fixtures for Appium</name>
     <description>Fixtures to assist in mobile app testing via FitNesse</description>
@@ -39,7 +39,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <fitnesse.version>20180127</fitnesse.version>
-        <hsac.fixtures.version>3.27.1</hsac.fixtures.version>
+        <hsac.fixtures.version>3.28.0</hsac.fixtures.version>
         <appium.version>6.1.0</appium.version>
     </properties>
 
