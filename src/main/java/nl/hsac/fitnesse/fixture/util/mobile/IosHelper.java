@@ -18,7 +18,6 @@ import static nl.hsac.fitnesse.fixture.util.selenium.by.TechnicalSelectorBy.byIf
  * Specialized helper to deal with appium's iOS web driver.
  */
 public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
-    private static final Function<String, By> IOS_UI_AUTOMATION_BY = byIfStartsWith("uiAutomator", MobileBy::IosUIAutomation);
     private static final Function<String, By> IOS_CLASS_CHAIN_BY = byIfStartsWith("iOSClassChain", MobileBy::iOSClassChain);
     private static final Function<String, By> IOS_NS_PREDICATE_STRING_BY = byIfStartsWith("iOSNsPredicate", MobileBy::iOSNsPredicateString);
 
@@ -30,7 +29,6 @@ public class IosHelper extends AppiumHelper<IOSElement, IOSDriver<IOSElement>> {
     public By placeToBy(String place) {
         return firstNonNull(place,
                 super::placeToBy,
-                IOS_UI_AUTOMATION_BY,
                 IOS_CLASS_CHAIN_BY,
                 IOS_NS_PREDICATE_STRING_BY);
     }

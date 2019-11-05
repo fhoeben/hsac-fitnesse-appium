@@ -123,7 +123,7 @@ public class AppiumHelper<T extends MobileElement, D extends AppiumDriver<T>> ex
     }
 
     @Override
-    public void scrollTo(WebElement element) {
+    public void scrollTo(WebElement element, boolean scollToCenter) {
         if (!element.isDisplayed()) {
             getScrollHelper().scrollTo(0.5, element.toString(), x -> (T) element);
         }
